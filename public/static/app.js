@@ -300,19 +300,38 @@ function renderNewsDetail(newsItems) {
       <p class="text-xl text-gray-700 leading-relaxed mb-6">${news.summary}</p>
       <div class="flex items-center space-x-4">
         <button 
-          onclick="speak('${news.title}. ${news.summary}')"
+          onclick="speakNews('${news.id}')"
+          data-title="${news.title.replace(/'/g, '&#39;')}"
+          data-summary="${news.summary.replace(/'/g, '&#39;')}"
           class="flex-1 bg-zzonde-orange text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-zzonde-yellow transition-all shadow-md flex items-center justify-center space-x-2"
         >
           <i class="fas fa-volume-up"></i>
           <span>읽어주기</span>
         </button>
-        <button class="flex-1 bg-gray-100 text-gray-800 px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-200 transition-all shadow-md flex items-center justify-center space-x-2">
+        <button 
+          onclick="shareNews('${news.id}')"
+          class="flex-1 bg-gray-100 text-gray-800 px-6 py-4 rounded-xl font-bold text-lg hover:bg-gray-200 transition-all shadow-md flex items-center justify-center space-x-2"
+        >
           <i class="fas fa-share-alt"></i>
           <span>공유하기</span>
         </button>
       </div>
     </article>
   `).join('');
+}
+
+// Helper function for speaking news
+function speakNews(newsId) {
+  const button = event.target.closest('button');
+  const title = button.getAttribute('data-title').replace(/&#39;/g, "'");
+  const summary = button.getAttribute('data-summary').replace(/&#39;/g, "'");
+  speak(`${title}. ${summary}`);
+}
+
+// Helper function for sharing news
+function shareNews(newsId) {
+  speak('공유 기능은 곧 제공될 예정입니다');
+  // Future: Implement actual sharing functionality
 }
 
 // Click outside modal to close

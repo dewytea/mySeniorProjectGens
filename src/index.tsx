@@ -51,7 +51,7 @@ app.get('/', (c) => {
                 onclick="changeTextSize('small')"
                 class="text-size-btn bg-white px-6 py-3 rounded-xl shadow hover:shadow-lg transition-all font-semibold border-2 border-gray-300"
               >
-                <span class="text-base">작게</span>
+                <span class="text-lg">작게</span>
               </button>
               <button 
                 onclick="changeTextSize('medium')"
