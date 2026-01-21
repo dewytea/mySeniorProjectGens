@@ -588,6 +588,47 @@ app.get('/settings', (c) => {
 
       <main class="max-w-7xl mx-auto px-4 py-6">
         <div class="space-y-4">
+          {/* User Profile Section */}
+          <div class="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl shadow-lg p-6 border-2 border-zzonde-orange">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+              <i class="fas fa-user-circle text-zzonde-orange mr-3"></i>
+              사용자 정보
+            </h2>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between py-4 border-b border-orange-200">
+                <div class="flex-1">
+                  <label class="text-xl font-semibold text-gray-800 block mb-2">이름</label>
+                  <input 
+                    type="text" 
+                    id="userName"
+                    placeholder="예: 김철수"
+                    class="w-full px-4 py-3 text-xl border-2 border-gray-300 rounded-lg focus:border-zzonde-orange focus:outline-none"
+                  />
+                </div>
+              </div>
+              <div class="flex items-center justify-between py-4 border-b border-orange-200">
+                <div class="flex-1">
+                  <label class="text-xl font-semibold text-gray-800 block mb-2">호칭</label>
+                  <select 
+                    id="userTitle"
+                    class="w-full px-4 py-3 text-xl border-2 border-gray-300 rounded-lg focus:border-zzonde-orange focus:outline-none"
+                  >
+                    <option value="님">님</option>
+                    <option value="프로님">프로님</option>
+                    <option value="선생님">선생님</option>
+                    <option value="어르신">어르신</option>
+                  </select>
+                </div>
+              </div>
+              <button 
+                onclick="saveUserProfile()"
+                class="w-full bg-zzonde-orange text-white px-8 py-4 rounded-full font-bold text-xl hover:bg-zzonde-yellow transition-all shadow-lg"
+              >
+                <i class="fas fa-save mr-2"></i>저장하기
+              </button>
+            </div>
+          </div>
+
           <div class="bg-white rounded-2xl shadow-lg p-6">
             <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
               <i class="fas fa-text-height text-zzonde-orange mr-3"></i>
@@ -625,6 +666,25 @@ app.get('/settings', (c) => {
                   <span class="absolute cursor-pointer inset-0 bg-zzonde-orange rounded-full transition-all"></span>
                 </label>
               </div>
+            </div>
+          </div>
+
+          {/* Voice Command History */}
+          <div class="bg-white rounded-2xl shadow-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                <i class="fas fa-history text-zzonde-orange mr-3"></i>
+                최근 음성 명령
+              </h2>
+              <button 
+                onclick="clearVoiceHistory()"
+                class="text-red-500 hover:text-red-700 font-semibold text-lg"
+              >
+                <i class="fas fa-trash mr-2"></i>전체 삭제
+              </button>
+            </div>
+            <div id="voiceHistoryList" class="space-y-3">
+              <p class="text-center text-gray-500 text-lg py-8">아직 음성 명령 기록이 없습니다</p>
             </div>
           </div>
 
