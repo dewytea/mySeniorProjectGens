@@ -6,8 +6,11 @@ export const renderer = jsxRenderer(({ children }) => {
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-        <title>NIAGARA - 폭포처럼 쏟아지는 정보, 간단하게</title>
+        <title>ZZonde (쫀드기) - 인생이 쫀득해진다</title>
         <meta name="description" content="시니어를 위한 음성+터치 하이브리드 플랫폼" />
+        
+        {/* Google Fonts - Quicksand for chewy feeling */}
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet" />
         
         {/* Tailwind CSS */}
         <script src="https://cdn.tailwindcss.com"></script>
@@ -25,8 +28,9 @@ export const renderer = jsxRenderer(({ children }) => {
               theme: {
                 extend: {
                   colors: {
-                    'niagara-blue': '#1A237E',
-                    'niagara-light': '#3949AB',
+                    'zzonde-orange': '#FF6D00',
+                    'zzonde-yellow': '#FFD600',
+                    'zzonde-black': '#222222',
                   }
                 }
               }

@@ -1,4 +1,4 @@
-// NIAGARA - Voice + Touch Hybrid Platform
+// ZZONDE - Voice + Touch Hybrid Platform
 // Text Size Management
 let currentTextSize = 'medium';
 
@@ -28,7 +28,7 @@ const textSizes = {
 
 function changeTextSize(size) {
   currentTextSize = size;
-  localStorage.setItem('niagara_text_size', size);
+  localStorage.setItem('zzonde_text_size', size);
   
   const root = document.documentElement;
   const sizes = textSizes[size];
@@ -41,7 +41,7 @@ function changeTextSize(size) {
   
   // Update button styles
   document.querySelectorAll('.text-size-btn').forEach(btn => {
-    btn.classList.remove('bg-niagara-blue', 'text-white');
+    btn.classList.remove('bg-zzonde-orange', 'text-white');
     btn.classList.add('bg-white', 'border-2', 'border-gray-300');
   });
   
@@ -50,7 +50,7 @@ function changeTextSize(size) {
   
   if (activeBtn) {
     activeBtn.classList.remove('bg-white', 'border-2', 'border-gray-300');
-    activeBtn.classList.add('bg-niagara-blue', 'text-white');
+    activeBtn.classList.add('bg-zzonde-orange', 'text-white');
   }
   
   // TTS announcement
@@ -61,7 +61,7 @@ function changeTextSize(size) {
 
 // Load saved text size
 window.addEventListener('DOMContentLoaded', () => {
-  const savedSize = localStorage.getItem('niagara_text_size') || 'medium';
+  const savedSize = localStorage.getItem('zzonde_text_size') || 'medium';
   changeTextSize(savedSize);
   loadNews();
 });
@@ -270,7 +270,7 @@ function renderNews(newsItems) {
     <a href="/news" class="block bg-gray-50 hover:bg-gray-100 rounded-xl p-5 transition-all border-2 border-transparent hover:border-niagara-blue">
       <div class="flex items-start space-x-4">
         <div class="flex-shrink-0">
-          <span class="inline-block bg-niagara-blue text-white px-3 py-1 rounded-full text-sm font-semibold">
+          <span class="inline-block bg-zzonde-orange text-white px-3 py-1 rounded-full text-sm font-semibold">
             ${news.category}
           </span>
         </div>
@@ -291,7 +291,7 @@ function renderNewsDetail(newsItems) {
   newsDetailList.innerHTML = newsItems.map(news => `
     <article class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all">
       <div class="flex items-center space-x-3 mb-4">
-        <span class="inline-block bg-niagara-blue text-white px-4 py-2 rounded-full text-base font-semibold">
+        <span class="inline-block bg-zzonde-orange text-white px-4 py-2 rounded-full text-base font-semibold">
           ${news.category}
         </span>
         <span class="text-gray-500 text-base">${news.time}</span>
@@ -301,7 +301,7 @@ function renderNewsDetail(newsItems) {
       <div class="flex items-center space-x-4">
         <button 
           onclick="speak('${news.title}. ${news.summary}')"
-          class="flex-1 bg-niagara-blue text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-niagara-light transition-all shadow-md flex items-center justify-center space-x-2"
+          class="flex-1 bg-zzonde-orange text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-zzonde-yellow transition-all shadow-md flex items-center justify-center space-x-2"
         >
           <i class="fas fa-volume-up"></i>
           <span>읽어주기</span>
@@ -340,4 +340,4 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-console.log('NIAGARA initialized successfully! 🚀');
+console.log('ZZONDE initialized successfully! 🚀');
