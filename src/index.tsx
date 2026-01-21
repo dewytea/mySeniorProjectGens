@@ -70,7 +70,7 @@ app.get('/', (c) => {
         </div>
 
         {/* Quick Actions */}
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
           <a href="/news" class="quick-action-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all text-center border-2 border-transparent hover:border-zzonde-orange">
             <i class="fas fa-newspaper text-5xl text-zzonde-orange mb-3"></i>
             <p class="text-xl font-bold text-gray-800">뉴스</p>
@@ -82,6 +82,18 @@ app.get('/', (c) => {
           <a href="/health" class="quick-action-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all text-center border-2 border-transparent hover:border-zzonde-orange">
             <i class="fas fa-heartbeat text-5xl text-zzonde-orange mb-3"></i>
             <p class="text-xl font-bold text-gray-800">건강</p>
+          </a>
+          <a href="/jobs" class="quick-action-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all text-center border-2 border-transparent hover:border-zzonde-orange">
+            <i class="fas fa-briefcase text-5xl text-green-600 mb-3"></i>
+            <p class="text-xl font-bold text-gray-800">일거리 찾기</p>
+          </a>
+          <a href="/community" class="quick-action-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all text-center border-2 border-transparent hover:border-zzonde-orange">
+            <i class="fas fa-comments text-5xl text-blue-600 mb-3"></i>
+            <p class="text-xl font-bold text-gray-800">동네 이야기</p>
+          </a>
+          <a href="/marketplace" class="quick-action-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all text-center border-2 border-transparent hover:border-zzonde-orange">
+            <i class="fas fa-shopping-basket text-5xl text-purple-600 mb-3"></i>
+            <p class="text-xl font-bold text-gray-800">나눔 장터</p>
           </a>
           <a href="/settings" class="quick-action-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all text-center border-2 border-transparent hover:border-zzonde-orange">
             <i class="fas fa-cog text-5xl text-gray-600 mb-3"></i>
@@ -113,7 +125,9 @@ app.get('/', (c) => {
             <div>
               <h3 class="text-2xl font-bold text-gray-800 mb-3">음성으로 더 편리하게</h3>
               <div class="space-y-2 text-lg text-gray-700">
-                <p><i class="fas fa-check text-green-600 mr-2"></i> "오늘 날씨 알려줘"</p>
+                <p><i class="fas fa-check text-green-600 mr-2"></i> "일자리 찾아줘"</p>
+                <p><i class="fas fa-check text-green-600 mr-2"></i> "심심해, 이야기하고 싶어"</p>
+                <p><i class="fas fa-check text-green-600 mr-2"></i> "장터 보여줘"</p>
                 <p><i class="fas fa-check text-green-600 mr-2"></i> "최신 뉴스 보여줘"</p>
                 <p><i class="fas fa-check text-green-600 mr-2"></i> "글씨 크게 해줘"</p>
               </div>
@@ -627,6 +641,239 @@ app.get('/settings', (c) => {
           </div>
         </div>
       </main>
+    </div>
+  )
+})
+
+// 일거리 찾기 페이지
+app.get('/jobs', (c) => {
+  return c.render(
+    <div class="min-h-screen bg-gradient-to-b from-green-50 to-emerald-50 pb-24">
+      <header class="bg-zzonde-orange text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+          <div class="flex items-center space-x-4">
+            <a href="/" class="text-white hover:text-gray-200">
+              <i class="fas fa-arrow-left text-2xl"></i>
+            </a>
+            <h1 class="text-2xl font-bold">일거리 찾기</h1>
+          </div>
+        </div>
+      </header>
+
+      <main class="max-w-7xl mx-auto px-4 py-6">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+            <i class="fas fa-briefcase text-green-600 mr-3"></i>
+            오늘의 일거리
+          </h2>
+          
+          <div class="space-y-4">
+            {[
+              { title: '마트 진열 도우미', location: '강남구', pay: '시간당 15,000원', time: '오전 9시-12시', icon: 'fa-shopping-cart' },
+              { title: '공원 청소 봉사', location: '서초구', pay: '시간당 12,000원', time: '오후 2시-5시', icon: 'fa-broom' },
+              { title: '배달 보조', location: '송파구', pay: '건당 5,000원', time: '오후 6시-9시', icon: 'fa-motorcycle' },
+            ].map(job => (
+              <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border-2 border-green-200 hover:border-green-400 transition-all">
+                <div class="flex items-start justify-between">
+                  <div class="flex items-start space-x-4">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">
+                      <i class={`fas ${job.icon} text-3xl text-white`}></i>
+                    </div>
+                    <div>
+                      <h3 class="text-2xl font-bold text-gray-800 mb-2">{job.title}</h3>
+                      <p class="text-lg text-gray-600">
+                        <i class="fas fa-map-marker-alt text-green-600 mr-2"></i>
+                        {job.location}
+                      </p>
+                      <p class="text-lg text-gray-600">
+                        <i class="fas fa-clock text-green-600 mr-2"></i>
+                        {job.time}
+                      </p>
+                      <p class="text-xl font-bold text-green-600 mt-2">{job.pay}</p>
+                    </div>
+                  </div>
+                  <button class="bg-green-500 text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-green-600 transition-all">
+                    지원하기
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+            <i class="fas fa-lightbulb text-zzonde-yellow mr-3"></i>
+            일거리 찾기 팁
+          </h3>
+          <div class="space-y-3">
+            <p class="text-xl text-gray-700">
+              <i class="fas fa-check-circle text-green-600 mr-2"></i>
+              주 3회 이하 단기 일자리가 많습니다
+            </p>
+            <p class="text-xl text-gray-700">
+              <i class="fas fa-check-circle text-green-600 mr-2"></i>
+              건강 상태에 맞는 일을 선택하세요
+            </p>
+          </div>
+        </div>
+      </main>
+
+      <script src="/static/app.js"></script>
+    </div>
+  )
+})
+
+// 동네 이야기 페이지
+app.get('/community', (c) => {
+  return c.render(
+    <div class="min-h-screen bg-gradient-to-b from-blue-50 to-cyan-50 pb-24">
+      <header class="bg-zzonde-orange text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+          <div class="flex items-center space-x-4">
+            <a href="/" class="text-white hover:text-gray-200">
+              <i class="fas fa-arrow-left text-2xl"></i>
+            </a>
+            <h1 class="text-2xl font-bold">동네 이야기</h1>
+          </div>
+        </div>
+      </header>
+
+      <main class="max-w-7xl mx-auto px-4 py-6">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-6">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+              <i class="fas fa-comments text-blue-600 mr-3"></i>
+              이웃들의 이야기
+            </h2>
+            <button class="bg-blue-500 text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-blue-600 transition-all">
+              <i class="fas fa-pen mr-2"></i>글쓰기
+            </button>
+          </div>
+          
+          <div class="space-y-4">
+            {[
+              { name: '김철수', time: '30분 전', content: '오늘 날씨가 참 좋네요! 공원 산책 어떠세요?', likes: 12, comments: 5 },
+              { name: '이영희', time: '1시간 전', content: '동네 맛집 추천해주세요. 손주들 데리고 갈 곳 찾아요!', likes: 8, comments: 15 },
+              { name: '박민수', time: '2시간 전', content: '오늘 복지관에서 탁구 대회가 있다고 하네요!', likes: 20, comments: 7 },
+            ].map(post => (
+              <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6 border-2 border-blue-200 hover:border-blue-400 transition-all">
+                <div class="flex items-start space-x-4 mb-4">
+                  <div class="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center">
+                    <i class="fas fa-user text-2xl text-white"></i>
+                  </div>
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between mb-2">
+                      <p class="text-xl font-bold text-gray-800">{post.name}</p>
+                      <p class="text-base text-gray-500">{post.time}</p>
+                    </div>
+                    <p class="text-xl text-gray-700 leading-relaxed">{post.content}</p>
+                  </div>
+                </div>
+                <div class="flex items-center space-x-6 text-lg text-gray-600 border-t pt-4">
+                  <button class="flex items-center space-x-2 hover:text-blue-600 transition-all">
+                    <i class="fas fa-thumbs-up"></i>
+                    <span>좋아요 {post.likes}</span>
+                  </button>
+                  <button class="flex items-center space-x-2 hover:text-blue-600 transition-all">
+                    <i class="fas fa-comment"></i>
+                    <span>댓글 {post.comments}</span>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
+
+      <script src="/static/app.js"></script>
+    </div>
+  )
+})
+
+// 나눔 장터 페이지
+app.get('/marketplace', (c) => {
+  return c.render(
+    <div class="min-h-screen bg-gradient-to-b from-purple-50 to-pink-50 pb-24">
+      <header class="bg-zzonde-orange text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+          <div class="flex items-center space-x-4">
+            <a href="/" class="text-white hover:text-gray-200">
+              <i class="fas fa-arrow-left text-2xl"></i>
+            </a>
+            <h1 class="text-2xl font-bold">나눔 장터</h1>
+          </div>
+        </div>
+      </header>
+
+      <main class="max-w-7xl mx-auto px-4 py-6">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-6">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+              <i class="fas fa-shopping-basket text-purple-600 mr-3"></i>
+              이웃과 나누기
+            </h2>
+            <button class="bg-purple-500 text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-purple-600 transition-all">
+              <i class="fas fa-plus mr-2"></i>등록하기
+            </button>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              { title: '전기밥솥', price: '무료 나눔', condition: '깨끗함', seller: '김영수', location: '강남구', image: 'fa-blender' },
+              { title: '책상', price: '10,000원', condition: '중고', seller: '이미숙', location: '서초구', image: 'fa-chair' },
+              { title: '옷장', price: '무료 나눔', condition: '약간 낡음', seller: '박정희', location: '송파구', image: 'fa-box-open' },
+              { title: '자전거', price: '50,000원', condition: '양호', seller: '최민호', location: '강동구', image: 'fa-bicycle' },
+            ].map(item => (
+              <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 border-2 border-purple-200 hover:border-purple-400 transition-all">
+                <div class="flex items-start space-x-4">
+                  <div class="w-20 h-20 bg-purple-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i class={`fas ${item.image} text-4xl text-white`}></i>
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">{item.title}</h3>
+                    <p class="text-xl font-bold text-purple-600 mb-2">{item.price}</p>
+                    <p class="text-lg text-gray-600">
+                      <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                      {item.condition}
+                    </p>
+                    <p class="text-lg text-gray-600">
+                      <i class="fas fa-user text-purple-600 mr-2"></i>
+                      {item.seller}
+                    </p>
+                    <p class="text-lg text-gray-600">
+                      <i class="fas fa-map-marker-alt text-purple-600 mr-2"></i>
+                      {item.location}
+                    </p>
+                  </div>
+                </div>
+                <button class="w-full mt-4 bg-purple-500 text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-purple-600 transition-all">
+                  연락하기
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+            <i class="fas fa-info-circle text-zzonde-orange mr-3"></i>
+            안전한 거래 팁
+          </h3>
+          <div class="space-y-3">
+            <p class="text-xl text-gray-700">
+              <i class="fas fa-check-circle text-purple-600 mr-2"></i>
+              직접 만나서 물건을 확인하세요
+            </p>
+            <p class="text-xl text-gray-700">
+              <i class="fas fa-check-circle text-purple-600 mr-2"></i>
+              믿을 수 있는 이웃과 거래하세요
+            </p>
+          </div>
+        </div>
+      </main>
+
+      <script src="/static/app.js"></script>
     </div>
   )
 })

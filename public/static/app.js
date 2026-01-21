@@ -127,7 +127,14 @@ if (voiceBtn) {
 
 function startVoice() {
   if (!recognition) {
-    alert('이 브라우저는 음성 인식을 지원하지 않습니다. Chrome 브라우저를 사용해주세요.');
+    // Web Speech API가 지원되지 않으면 prompt로 fallback
+    speak('음성 인식이 지원되지 않습니다. 텍스트로 입력해주세요.');
+    setTimeout(() => {
+      const userInput = prompt('무엇을 도와드릴까요? (예: 일자리 찾아줘, 심심해, 장터 보여줘)');
+      if (userInput && userInput.trim()) {
+        handleVoiceCommand(userInput.trim());
+      }
+    }, 1000);
     return;
   }
   
@@ -147,6 +154,15 @@ function startVoice() {
       setTimeout(() => {
         recognition.start();
       }, 100);
+    } else {
+      // 실패하면 prompt로 fallback
+      stopVoice();
+      setTimeout(() => {
+        const userInput = prompt('무엇을 도와드릴까요? (예: 일자리 찾아줘, 심심해, 장터 보여줘)');
+        if (userInput && userInput.trim()) {
+          handleVoiceCommand(userInput.trim());
+        }
+      }, 500);
     }
   }
 }
@@ -160,75 +176,141 @@ function stopVoice() {
   }
 }
 
-// Voice Command Handler
+// Voice Command Handler with Smart Intent Recognition
 function handleVoiceCommand(command) {
   console.log('음성 명령:', command);
   
   const lowerCommand = command.toLowerCase().replace(/\s/g, '');
   
+  // Get user name from localStorage (default: 김철수 프로님)
+  const userName = localStorage.getItem('zzonde_user_name') || '김철수 프로';
+  
+  // Intent 1: 일거리 찾기 (Jobs)
+  if (lowerCommand.includes('일') || 
+      lowerCommand.includes('일자리') || 
+      lowerCommand.includes('돈') || 
+      lowerCommand.includes('알바') ||
+      lowerCommand.includes('직장') ||
+      lowerCommand.includes('구인') ||
+      lowerCommand.includes('아르바이트')) {
+    speak(`네, 알겠습니다. ${userName}님. 일거리 찾기 페이지로 이동합니다.`);
+    setTimeout(() => {
+      window.location.href = '/jobs';
+    }, 2000);
+    stopVoice();
+    return;
+  }
+  
+  // Intent 2: 동네 이야기 (Community)
+  if (lowerCommand.includes('심심') || 
+      lowerCommand.includes('이야기') || 
+      lowerCommand.includes('대화') ||
+      lowerCommand.includes('채팅') ||
+      lowerCommand.includes('친구') ||
+      lowerCommand.includes('동네') ||
+      lowerCommand.includes('이웃')) {
+    speak(`네, 알겠습니다. ${userName}님. 동네 이야기 페이지로 이동합니다.`);
+    setTimeout(() => {
+      window.location.href = '/community';
+    }, 2000);
+    stopVoice();
+    return;
+  }
+  
+  // Intent 3: 나눔 장터 (Marketplace)
+  if (lowerCommand.includes('장터') || 
+      lowerCommand.includes('사고싶') || 
+      lowerCommand.includes('주문') ||
+      lowerCommand.includes('구매') ||
+      lowerCommand.includes('판매') ||
+      lowerCommand.includes('나눔') ||
+      lowerCommand.includes('중고') ||
+      lowerCommand.includes('쇼핑')) {
+    speak(`네, 알겠습니다. ${userName}님. 나눔 장터 페이지로 이동합니다.`);
+    setTimeout(() => {
+      window.location.href = '/marketplace';
+    }, 2000);
+    stopVoice();
+    return;
+  }
+  
   // Text size commands
   if (lowerCommand.includes('글씨') || lowerCommand.includes('글자')) {
     if (lowerCommand.includes('크게') || lowerCommand.includes('키워')) {
-      changeTextSize('large');
+      speak(`네, 알겠습니다. ${userName}님. 글씨를 크게 변경합니다.`);
+      setTimeout(() => {
+        changeTextSize('large');
+      }, 1500);
       stopVoice();
       return;
     } else if (lowerCommand.includes('작게') || lowerCommand.includes('줄여')) {
-      changeTextSize('small');
+      speak(`네, 알겠습니다. ${userName}님. 글씨를 작게 변경합니다.`);
+      setTimeout(() => {
+        changeTextSize('small');
+      }, 1500);
       stopVoice();
       return;
     } else if (lowerCommand.includes('보통')) {
-      changeTextSize('medium');
+      speak(`네, 알겠습니다. ${userName}님. 글씨를 보통 크기로 변경합니다.`);
+      setTimeout(() => {
+        changeTextSize('medium');
+      }, 1500);
       stopVoice();
       return;
     }
   }
   
-  // Navigation commands
+  // Navigation commands (기존 기능 유지)
   if (lowerCommand.includes('뉴스')) {
-    speak('뉴스 페이지로 이동합니다');
+    speak(`네, 알겠습니다. ${userName}님. 뉴스 페이지로 이동합니다.`);
     setTimeout(() => {
       window.location.href = '/news';
-    }, 1000);
+    }, 2000);
+    stopVoice();
     return;
   }
   
   if (lowerCommand.includes('날씨')) {
-    speak('날씨 정보를 확인합니다');
+    speak(`네, 알겠습니다. ${userName}님. 날씨 정보를 확인합니다.`);
     setTimeout(() => {
       window.location.href = '/weather';
-    }, 1000);
+    }, 2000);
+    stopVoice();
     return;
   }
   
   if (lowerCommand.includes('건강')) {
-    speak('건강 페이지로 이동합니다');
+    speak(`네, 알겠습니다. ${userName}님. 건강 페이지로 이동합니다.`);
     setTimeout(() => {
       window.location.href = '/health';
-    }, 1000);
+    }, 2000);
+    stopVoice();
     return;
   }
   
   if (lowerCommand.includes('설정')) {
-    speak('설정 페이지로 이동합니다');
+    speak(`네, 알겠습니다. ${userName}님. 설정 페이지로 이동합니다.`);
     setTimeout(() => {
       window.location.href = '/settings';
-    }, 1000);
+    }, 2000);
+    stopVoice();
     return;
   }
   
   if (lowerCommand.includes('홈') || lowerCommand.includes('처음')) {
-    speak('홈 화면으로 이동합니다');
+    speak(`네, 알겠습니다. ${userName}님. 홈 화면으로 이동합니다.`);
     setTimeout(() => {
       window.location.href = '/';
-    }, 1000);
+    }, 2000);
+    stopVoice();
     return;
   }
   
-  // Default response
-  speak(`${command} 명령을 이해하지 못했습니다. 다시 말씀해주세요.`);
+  // Default response with suggestions
+  speak(`${userName}님, "${command}" 명령을 이해하지 못했습니다. 다시 말씀해주시거나, 일자리 찾기, 동네 이야기, 나눔 장터 등을 말씀해주세요.`);
   setTimeout(() => {
     stopVoice();
-  }, 2000);
+  }, 4000);
 }
 
 // Text-to-Speech (TTS)
