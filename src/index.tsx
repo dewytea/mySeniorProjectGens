@@ -14,6 +14,116 @@ app.use('/static/*', serveStatic({ root: './public' }))
 // Renderer middleware
 app.use(renderer)
 
+// ===== AI Intent Recognition API =====
+app.post('/api/ai-intent', async (c) => {
+  try {
+    const { command } = await c.req.json();
+    
+    if (!command) {
+      return c.json({ error: 'Command is required' }, 400);
+    }
+
+    // AI 인텐트 인식 프롬프트
+    const systemPrompt = `당신은 시니어를 위한 음성 어시스턴트 ZZonde의 인텐트 분류기입니다.
+
+사용자의 음성 명령을 분석하여 다음 중 하나의 인텐트로 분류하세요:
+
+**인텐트 목록:**
+1. "jobs" - 일자리, 알바, 돈벌기, 일거리 관련
+2. "community" - 심심함, 대화, 이야기, 친구, 이웃 관련
+3. "marketplace" - 장터, 쇼핑, 구매, 판매, 나눔 관련
+4. "medicine" - 복약, 약, 약시간, 건강관리 관련
+5. "todo" - 오늘 할 일, 일정, 계획 관련
+6. "news" - 뉴스, 소식 관련
+7. "weather" - 날씨 관련
+8. "health" - 건강, 운동, 식단 관련
+9. "text_size_large" - 글씨 크게
+10. "text_size_small" - 글씨 작게
+11. "text_size_medium" - 글씨 보통
+12. "settings" - 설정 관련
+13. "home" - 홈, 처음으로
+14. "unknown" - 위 카테고리에 해당하지 않음
+
+**응답 형식 (JSON만 반환):**
+{
+  "intent": "인텐트명",
+  "confidence": 0.95,
+  "response": "사용자에게 들려줄 친근한 응답 (존댓말)"
+}
+
+**예시:**
+입력: "일자리 찾고 싶어요"
+출력: {"intent": "jobs", "confidence": 0.95, "response": "일자리를 찾아드릴게요"}
+
+입력: "심심한데 누구 없나"
+출력: {"intent": "community", "confidence": 0.90, "response": "동네 이웃들과 이야기 나눠보세요"}`;
+
+    // OpenAI API 호출 (간단한 fetch 사용)
+    const response = await fetch('https://www.genspark.ai/api/llm_proxy/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${c.env?.OPENAI_API_KEY || process.env.OPENAI_API_KEY || 'gsk-default'}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-5-mini',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: command }
+        ],
+        temperature: 0.3,
+        max_tokens: 150
+      })
+    });
+
+    if (!response.ok) {
+      console.error('OpenAI API error:', await response.text());
+      // Fallback to rule-based
+      return c.json({ 
+        intent: 'unknown', 
+        confidence: 0.5,
+        response: '명령을 이해하지 못했습니다',
+        fallback: true
+      });
+    }
+
+    const data = await response.json();
+    const content = data.choices[0].message.content.trim();
+    
+    // JSON 파싱
+    let result;
+    try {
+      // JSON 블록에서 추출
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        result = JSON.parse(jsonMatch[0]);
+      } else {
+        result = JSON.parse(content);
+      }
+    } catch (e) {
+      console.error('JSON parse error:', e, 'Content:', content);
+      return c.json({ 
+        intent: 'unknown', 
+        confidence: 0.5,
+        response: '명령을 이해하지 못했습니다',
+        fallback: true
+      });
+    }
+
+    return c.json(result);
+
+  } catch (error) {
+    console.error('AI Intent API error:', error);
+    return c.json({ 
+      error: 'Internal server error',
+      intent: 'unknown',
+      confidence: 0.5,
+      response: '일시적인 오류가 발생했습니다',
+      fallback: true
+    }, 500);
+  }
+})
+
 // 홈 화면
 app.get('/', (c) => {
   return c.render(
@@ -660,10 +770,33 @@ app.get('/settings', (c) => {
             </h2>
             <div class="space-y-4">
               <div class="flex items-center justify-between py-4 border-b">
-                <span class="text-xl">음성 안내</span>
+                <div>
+                  <span class="text-xl font-semibold">음성 안내</span>
+                  <p class="text-base text-gray-600 mt-1">음성으로 안내를 들을 수 있습니다</p>
+                </div>
                 <label class="relative inline-block w-16 h-8">
                   <input type="checkbox" checked class="opacity-0 w-0 h-0" />
                   <span class="absolute cursor-pointer inset-0 bg-zzonde-orange rounded-full transition-all"></span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between py-4 border-b">
+                <div>
+                  <span class="text-xl font-semibold flex items-center">
+                    AI 음성 인식
+                    <span class="ml-2 px-2 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm rounded-full">
+                      <i class="fas fa-magic mr-1"></i>NEW
+                    </span>
+                  </span>
+                  <p class="text-base text-gray-600 mt-1">AI가 더 정확하게 명령을 이해합니다</p>
+                </div>
+                <label class="relative inline-block w-16 h-8">
+                  <input 
+                    type="checkbox" 
+                    id="aiModeToggle"
+                    onchange="toggleAIMode(this.checked)"
+                    class="opacity-0 w-0 h-0" 
+                  />
+                  <span class="absolute cursor-pointer inset-0 bg-gray-300 rounded-full transition-all"></span>
                 </label>
               </div>
             </div>

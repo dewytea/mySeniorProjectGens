@@ -43,6 +43,40 @@ function loadUserProfile() {
   if (titleSelect) {
     titleSelect.value = currentUserTitle;
   }
+  
+  // Load AI mode setting
+  const aiModeToggle = document.getElementById('aiModeToggle');
+  if (aiModeToggle) {
+    const useAI = localStorage.getItem('zzonde_use_ai') === 'true';
+    aiModeToggle.checked = useAI;
+    
+    // Update toggle UI
+    const toggleSpan = aiModeToggle.nextElementSibling;
+    if (useAI) {
+      toggleSpan.classList.remove('bg-gray-300');
+      toggleSpan.classList.add('bg-gradient-to-r', 'from-purple-500', 'to-pink-500');
+    }
+  }
+}
+
+// Toggle AI mode
+function toggleAIMode(enabled) {
+  localStorage.setItem('zzonde_use_ai', enabled ? 'true' : 'false');
+  
+  const toggleSpan = document.querySelector('#aiModeToggle + span');
+  if (toggleSpan) {
+    if (enabled) {
+      toggleSpan.classList.remove('bg-gray-300');
+      toggleSpan.classList.add('bg-gradient-to-r', 'from-purple-500', 'to-pink-500');
+      speak('AI 음성 인식이 활성화되었습니다. 더 정확한 명령 이해가 가능합니다.');
+      showNotification('AI 모드 활성화! 🤖', 'success');
+    } else {
+      toggleSpan.classList.remove('bg-gradient-to-r', 'from-purple-500', 'to-pink-500');
+      toggleSpan.classList.add('bg-gray-300');
+      speak('AI 음성 인식이 비활성화되었습니다. 기본 규칙 기반 인식을 사용합니다.');
+      showNotification('기본 모드로 전환', 'info');
+    }
+  }
 }
 
 // Add command to history
@@ -217,7 +251,7 @@ if ('webkitSpeechRecognition' in window) {
     console.log('음성 인식 시작');
   };
   
-  recognition.onresult = function(event) {
+  recognition.onresult = async function(event) {
     let interimTranscript = '';
     let finalTranscript = '';
     
@@ -236,7 +270,21 @@ if ('webkitSpeechRecognition' in window) {
     }
     
     if (finalTranscript) {
-      handleVoiceCommand(finalTranscript);
+      const useAI = localStorage.getItem('zzonde_use_ai') === 'true';
+      
+      if (useAI) {
+        // AI Intent Recognition
+        const intentResult = await recognizeIntentWithAI(finalTranscript);
+        if (intentResult && !intentResult.fallback) {
+          handleIntentResult(finalTranscript, intentResult);
+        } else {
+          // Fallback to rule-based
+          handleVoiceCommand(finalTranscript);
+        }
+      } else {
+        // Rule-based only
+        handleVoiceCommand(finalTranscript);
+      }
     }
   };
   
@@ -261,14 +309,121 @@ if (voiceBtn) {
   voiceBtn.addEventListener('click', startVoice);
 }
 
+// AI Intent Recognition
+async function recognizeIntentWithAI(command) {
+  try {
+    const response = await fetch('/api/ai-intent', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ command })
+    });
+
+    if (!response.ok) {
+      throw new Error('AI API failed');
+    }
+
+    const result = await response.json();
+    console.log('AI Intent Result:', result);
+    return result;
+  } catch (error) {
+    console.error('AI Intent Recognition failed:', error);
+    return null;
+  }
+}
+
+// Handle intent result
+function handleIntentResult(command, intentResult) {
+  const userName = `${currentUserName} ${currentUserTitle}`;
+  const intent = intentResult.intent;
+  const aiResponse = intentResult.response || '';
+  
+  // Map intent to action
+  const intentMap = {
+    'jobs': '/jobs',
+    'community': '/community',
+    'marketplace': '/marketplace',
+    'medicine': '/health',
+    'todo': '/health',
+    'news': '/news',
+    'weather': '/weather',
+    'health': '/health',
+    'settings': '/settings',
+    'home': '/'
+  };
+  
+  // Text size intents
+  if (intent === 'text_size_large') {
+    addToVoiceHistory(command, '글씨 크기를 크게 변경 (AI)');
+    speak(`네, 알겠습니다. ${userName}. ${aiResponse}`);
+    setTimeout(() => changeTextSize('large'), 1500);
+    stopVoice();
+    return true;
+  }
+  
+  if (intent === 'text_size_small') {
+    addToVoiceHistory(command, '글씨 크기를 작게 변경 (AI)');
+    speak(`네, 알겠습니다. ${userName}. ${aiResponse}`);
+    setTimeout(() => changeTextSize('small'), 1500);
+    stopVoice();
+    return true;
+  }
+  
+  if (intent === 'text_size_medium') {
+    addToVoiceHistory(command, '글씨 크기를 보통으로 변경 (AI)');
+    speak(`네, 알겠습니다. ${userName}. ${aiResponse}`);
+    setTimeout(() => changeTextSize('medium'), 1500);
+    stopVoice();
+    return true;
+  }
+  
+  // Navigation intents
+  const targetPage = intentMap[intent];
+  if (targetPage) {
+    const resultText = `${intentResult.response} (AI 인식)`;
+    addToVoiceHistory(command, resultText);
+    speak(`네, 알겠습니다. ${userName}. ${aiResponse}`);
+    setTimeout(() => {
+      window.location.href = targetPage;
+    }, 2000);
+    stopVoice();
+    return true;
+  }
+  
+  // Unknown intent
+  if (intent === 'unknown') {
+    addToVoiceHistory(command, '명령을 이해하지 못함 (AI)');
+    speak(`${userName}, ${aiResponse}. 다시 말씀해주시거나, 일자리 찾기, 동네 이야기, 복약 시간 등을 말씀해주세요.`);
+    setTimeout(() => stopVoice(), 4000);
+    return false;
+  }
+  
+  return false;
+}
+
 function startVoice() {
+  // Check if AI mode is enabled
+  const useAI = localStorage.getItem('zzonde_use_ai') === 'true';
+  
   if (!recognition) {
     // Web Speech API가 지원되지 않으면 prompt로 fallback
     speak('음성 인식이 지원되지 않습니다. 텍스트로 입력해주세요.');
-    setTimeout(() => {
+    setTimeout(async () => {
       const userInput = prompt('무엇을 도와드릴까요? (예: 일자리 찾아줘, 심심해, 장터 보여줘)');
       if (userInput && userInput.trim()) {
-        handleVoiceCommand(userInput.trim());
+        if (useAI) {
+          // AI Intent Recognition
+          const intentResult = await recognizeIntentWithAI(userInput.trim());
+          if (intentResult && !intentResult.fallback) {
+            handleIntentResult(userInput.trim(), intentResult);
+          } else {
+            // Fallback to rule-based
+            handleVoiceCommand(userInput.trim());
+          }
+        } else {
+          handleVoiceCommand(userInput.trim());
+        }
       }
     }, 1000);
     return;
@@ -293,10 +448,19 @@ function startVoice() {
     } else {
       // 실패하면 prompt로 fallback
       stopVoice();
-      setTimeout(() => {
+      setTimeout(async () => {
         const userInput = prompt('무엇을 도와드릴까요? (예: 일자리 찾아줘, 심심해, 장터 보여줘)');
         if (userInput && userInput.trim()) {
-          handleVoiceCommand(userInput.trim());
+          if (useAI) {
+            const intentResult = await recognizeIntentWithAI(userInput.trim());
+            if (intentResult && !intentResult.fallback) {
+              handleIntentResult(userInput.trim(), intentResult);
+            } else {
+              handleVoiceCommand(userInput.trim());
+            }
+          } else {
+            handleVoiceCommand(userInput.trim());
+          }
         }
       }, 500);
     }
