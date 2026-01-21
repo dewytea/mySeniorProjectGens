@@ -303,19 +303,19 @@ function renderNewsDetail(newsItems) {
           onclick="speakNews('${news.id}')"
           data-title="${news.title.replace(/'/g, '&#39;')}"
           data-summary="${news.summary.replace(/'/g, '&#39;')}"
-          class="flex-1 bg-zzonde-orange text-white px-6 py-4 rounded-xl font-bold text-xl hover:bg-zzonde-yellow transition-all shadow-md"
-          style="display: flex !important; align-items: center !important; justify-content: center !important; gap: 12px !important; min-height: 56px !important;"
+          class="flex-1 px-6 py-4 rounded-xl font-bold text-xl transition-all shadow-md"
+          style="display: flex !important; align-items: center !important; justify-content: center !important; gap: 12px !important; min-height: 56px !important; background-color: #FF6D00 !important; color: #FFFFFF !important;"
         >
-          <i class="fas fa-volume-up" style="font-size: 20px;"></i>
-          <span style="display: inline-block; color: white; font-weight: 700; font-size: 18px;">읽어주기</span>
+          <i class="fas fa-volume-up" style="font-size: 20px; color: #FFFFFF;"></i>
+          <span style="display: inline-block; color: #FFFFFF !important; font-weight: 700; font-size: 18px;">읽어주기</span>
         </button>
         <button 
           onclick="shareNews('${news.id}')"
-          class="flex-1 bg-gray-100 text-gray-800 px-6 py-4 rounded-xl font-bold text-xl hover:bg-gray-200 transition-all shadow-md"
-          style="display: flex !important; align-items: center !important; justify-content: center !important; gap: 12px !important; min-height: 56px !important;"
+          class="flex-1 px-6 py-4 rounded-xl font-bold text-xl transition-all shadow-md"
+          style="display: flex !important; align-items: center !important; justify-content: center !important; gap: 12px !important; min-height: 56px !important; background-color: #f3f4f6 !important; color: #222222 !important;"
         >
-          <i class="fas fa-share-alt" style="font-size: 20px;"></i>
-          <span style="display: inline-block; color: #222222; font-weight: 700; font-size: 18px;">공유하기</span>
+          <i class="fas fa-share-alt" style="font-size: 20px; color: #222222;"></i>
+          <span style="display: inline-block; color: #222222 !important; font-weight: 700; font-size: 18px;">공유하기</span>
         </button>
       </div>
     </article>
