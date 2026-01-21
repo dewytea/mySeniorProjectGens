@@ -234,6 +234,329 @@ app.get('/news', (c) => {
   )
 })
 
+// 날씨 페이지
+app.get('/weather', (c) => {
+  return c.render(
+    <div class="min-h-screen bg-gradient-to-b from-orange-50 to-yellow-50 pb-24">
+      <header class="bg-zzonde-orange text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+          <div class="flex items-center space-x-4">
+            <a href="/" class="text-white hover:text-gray-200">
+              <i class="fas fa-arrow-left text-2xl"></i>
+            </a>
+            <h1 class="text-2xl font-bold">오늘의 날씨</h1>
+          </div>
+        </div>
+      </header>
+
+      <main class="max-w-7xl mx-auto px-4 py-6">
+        {/* Current Weather Card */}
+        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-6">
+          <div class="text-center mb-6">
+            <div class="flex items-center justify-center mb-4">
+              <i class="fas fa-map-marker-alt text-zzonde-orange text-2xl mr-2"></i>
+              <h2 class="text-2xl font-bold text-gray-800">서울</h2>
+            </div>
+            <div class="flex items-center justify-center mb-4">
+              <i class="fas fa-sun text-8xl text-zzonde-yellow"></i>
+            </div>
+            <div class="text-7xl font-bold text-gray-900 mb-2">
+              <span id="currentTemp">15</span>°
+            </div>
+            <p class="text-2xl text-gray-600 mb-4">맑음</p>
+            <div class="flex justify-center space-x-8 text-lg">
+              <div>
+                <i class="fas fa-tint text-blue-500 mr-2"></i>
+                <span>습도 <strong>60%</strong></span>
+              </div>
+              <div>
+                <i class="fas fa-wind text-gray-500 mr-2"></i>
+                <span>바람 <strong>2.5m/s</strong></span>
+              </div>
+            </div>
+          </div>
+
+          {/* Voice Button */}
+          <button 
+            onclick="speakWeather()"
+            class="w-full bg-zzonde-orange text-white px-8 py-4 rounded-full font-bold text-xl hover:bg-zzonde-yellow transition-all shadow-lg flex items-center justify-center space-x-3"
+          >
+            <i class="fas fa-volume-up text-2xl"></i>
+            <span>날씨 정보 듣기</span>
+          </button>
+        </div>
+
+        {/* Hourly Forecast */}
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+            <i class="fas fa-clock text-zzonde-orange mr-3"></i>
+            시간별 예보
+          </h3>
+          <div class="grid grid-cols-4 md:grid-cols-6 gap-4">
+            {[
+              { time: '오후 2시', icon: 'fa-sun', temp: '16°', color: 'text-zzonde-yellow' },
+              { time: '오후 3시', icon: 'fa-sun', temp: '17°', color: 'text-zzonde-yellow' },
+              { time: '오후 4시', icon: 'fa-cloud-sun', temp: '16°', color: 'text-gray-500' },
+              { time: '오후 5시', icon: 'fa-cloud', temp: '15°', color: 'text-gray-500' },
+              { time: '오후 6시', icon: 'fa-cloud-moon', temp: '14°', color: 'text-blue-400' },
+              { time: '오후 7시', icon: 'fa-moon', temp: '13°', color: 'text-blue-600' },
+            ].map(item => (
+              <div class="text-center bg-gray-50 rounded-xl p-4">
+                <p class="text-base font-semibold text-gray-700 mb-2">{item.time}</p>
+                <i class={`fas ${item.icon} text-4xl ${item.color} mb-2`}></i>
+                <p class="text-xl font-bold text-gray-900">{item.temp}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Weekly Forecast */}
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+            <i class="fas fa-calendar-week text-zzonde-orange mr-3"></i>
+            주간 예보
+          </h3>
+          <div class="space-y-3">
+            {[
+              { day: '오늘', icon: 'fa-sun', high: '17°', low: '10°', color: 'text-zzonde-yellow' },
+              { day: '내일', icon: 'fa-cloud-sun', high: '16°', low: '9°', color: 'text-gray-500' },
+              { day: '수요일', icon: 'fa-cloud-rain', high: '14°', low: '8°', color: 'text-blue-500' },
+              { day: '목요일', icon: 'fa-cloud', high: '15°', low: '9°', color: 'text-gray-500' },
+              { day: '금요일', icon: 'fa-sun', high: '18°', low: '11°', color: 'text-zzonde-yellow' },
+              { day: '토요일', icon: 'fa-sun', high: '19°', low: '12°', color: 'text-zzonde-yellow' },
+              { day: '일요일', icon: 'fa-cloud-sun', high: '17°', low: '11°', color: 'text-gray-500' },
+            ].map(item => (
+              <div class="flex items-center justify-between bg-gray-50 rounded-xl p-4">
+                <span class="text-xl font-semibold text-gray-800 w-24">{item.day}</span>
+                <i class={`fas ${item.icon} text-3xl ${item.color} w-16 text-center`}></i>
+                <div class="flex space-x-4 text-lg">
+                  <span class="text-gray-900 font-bold">{item.high}</span>
+                  <span class="text-gray-500">{item.low}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Air Quality */}
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+            <i class="fas fa-wind text-zzonde-orange mr-3"></i>
+            미세먼지 & 공기질
+          </h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-green-50 rounded-xl p-6 text-center border-2 border-green-200">
+              <i class="fas fa-leaf text-4xl text-green-600 mb-2"></i>
+              <p class="text-lg text-gray-700 mb-2">미세먼지 (PM10)</p>
+              <p class="text-3xl font-bold text-green-600">좋음</p>
+              <p class="text-base text-gray-600 mt-2">30 μg/m³</p>
+            </div>
+            <div class="bg-green-50 rounded-xl p-6 text-center border-2 border-green-200">
+              <i class="fas fa-smog text-4xl text-green-600 mb-2"></i>
+              <p class="text-lg text-gray-700 mb-2">초미세먼지 (PM2.5)</p>
+              <p class="text-3xl font-bold text-green-600">좋음</p>
+              <p class="text-base text-gray-600 mt-2">15 μg/m³</p>
+            </div>
+          </div>
+          <div class="mt-4 bg-blue-50 rounded-xl p-4 border-l-4 border-blue-500">
+            <p class="text-lg text-blue-800">
+              <i class="fas fa-info-circle mr-2"></i>
+              <strong>외출 추천:</strong> 오늘은 야외 활동하기 좋은 날씨입니다! 🌞
+            </p>
+          </div>
+        </div>
+      </main>
+
+      <script src="/static/app.js"></script>
+    </div>
+  )
+})
+
+// 건강 페이지
+app.get('/health', (c) => {
+  return c.render(
+    <div class="min-h-screen bg-gradient-to-b from-orange-50 to-yellow-50 pb-24">
+      <header class="bg-zzonde-orange text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+          <div class="flex items-center space-x-4">
+            <a href="/" class="text-white hover:text-gray-200">
+              <i class="fas fa-arrow-left text-2xl"></i>
+            </a>
+            <h1 class="text-2xl font-bold">건강 관리</h1>
+          </div>
+        </div>
+      </header>
+
+      <main class="max-w-7xl mx-auto px-4 py-6">
+        {/* Daily Summary */}
+        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+            <i class="fas fa-heartbeat text-zzonde-orange mr-3"></i>
+            오늘의 건강
+          </h2>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="text-center bg-orange-50 rounded-xl p-6">
+              <i class="fas fa-pills text-4xl text-zzonde-orange mb-3"></i>
+              <p class="text-lg text-gray-700">복약</p>
+              <p class="text-3xl font-bold text-zzonde-orange">2/3</p>
+            </div>
+            <div class="text-center bg-yellow-50 rounded-xl p-6">
+              <i class="fas fa-glass-water text-4xl text-blue-500 mb-3"></i>
+              <p class="text-lg text-gray-700">물</p>
+              <p class="text-3xl font-bold text-blue-500">5/8</p>
+            </div>
+            <div class="text-center bg-green-50 rounded-xl p-6">
+              <i class="fas fa-walking text-4xl text-green-600 mb-3"></i>
+              <p class="text-lg text-gray-700">걸음</p>
+              <p class="text-3xl font-bold text-green-600">3,240</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Medicine Schedule */}
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-2xl font-bold text-gray-800 flex items-center">
+              <i class="fas fa-pills text-zzonde-orange mr-3"></i>
+              오늘의 복약 일정
+            </h3>
+            <button class="bg-zzonde-orange text-white px-4 py-2 rounded-full text-base font-semibold hover:bg-zzonde-yellow transition-all">
+              <i class="fas fa-plus mr-2"></i>추가
+            </button>
+          </div>
+          
+          <div class="space-y-3">
+            {[
+              { time: '아침 8:00', name: '혈압약', taken: true, color: 'bg-green-50 border-green-300' },
+              { time: '점심 12:30', name: '소화제', taken: true, color: 'bg-green-50 border-green-300' },
+              { time: '저녁 6:00', name: '비타민', taken: false, color: 'bg-orange-50 border-orange-300' },
+            ].map(med => (
+              <div class={`${med.color} rounded-xl p-5 border-2 flex items-center justify-between`}>
+                <div class="flex items-center space-x-4">
+                  <div class={`w-16 h-16 rounded-full ${med.taken ? 'bg-green-500' : 'bg-zzonde-orange'} flex items-center justify-center`}>
+                    <i class={`fas ${med.taken ? 'fa-check' : 'fa-clock'} text-3xl text-white`}></i>
+                  </div>
+                  <div>
+                    <p class="text-xl font-bold text-gray-800">{med.name}</p>
+                    <p class="text-lg text-gray-600">{med.time}</p>
+                  </div>
+                </div>
+                {!med.taken && (
+                  <button 
+                    onclick={`takeMedicine('${med.name}')`}
+                    class="bg-zzonde-orange text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-zzonde-yellow transition-all"
+                  >
+                    복용 완료
+                  </button>
+                )}
+                {med.taken && (
+                  <span class="text-green-600 font-bold text-xl">
+                    <i class="fas fa-check-circle mr-2"></i>완료
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <button 
+            onclick="speakMedicineReminder()"
+            class="w-full mt-4 bg-gradient-to-r from-orange-100 to-yellow-100 text-zzonde-orange px-6 py-4 rounded-full font-bold text-xl hover:shadow-lg transition-all flex items-center justify-center space-x-3 border-2 border-zzonde-orange"
+          >
+            <i class="fas fa-volume-up text-2xl"></i>
+            <span>복약 시간 음성 알림</span>
+          </button>
+        </div>
+
+        {/* Health Metrics */}
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+            <i class="fas fa-chart-line text-zzonde-orange mr-3"></i>
+            건강 지표
+          </h3>
+          <div class="space-y-4">
+            <div class="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-5 border-l-4 border-red-400">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-lg text-gray-700 mb-1">혈압</p>
+                  <p class="text-3xl font-bold text-gray-900">120/80 <span class="text-xl text-gray-600">mmHg</span></p>
+                </div>
+                <i class="fas fa-heartbeat text-5xl text-red-400"></i>
+              </div>
+              <p class="text-base text-green-600 mt-2">
+                <i class="fas fa-check-circle mr-1"></i> 정상 범위입니다
+              </p>
+            </div>
+
+            <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-5 border-l-4 border-blue-400">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-lg text-gray-700 mb-1">혈당</p>
+                  <p class="text-3xl font-bold text-gray-900">95 <span class="text-xl text-gray-600">mg/dL</span></p>
+                </div>
+                <i class="fas fa-tint text-5xl text-blue-400"></i>
+              </div>
+              <p class="text-base text-green-600 mt-2">
+                <i class="fas fa-check-circle mr-1"></i> 정상 범위입니다
+              </p>
+            </div>
+
+            <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-5 border-l-4 border-purple-400">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-lg text-gray-700 mb-1">체온</p>
+                  <p class="text-3xl font-bold text-gray-900">36.5 <span class="text-xl text-gray-600">°C</span></p>
+                </div>
+                <i class="fas fa-thermometer-half text-5xl text-purple-400"></i>
+              </div>
+              <p class="text-base text-green-600 mt-2">
+                <i class="fas fa-check-circle mr-1"></i> 정상 범위입니다
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Health Tips */}
+        <div class="bg-gradient-to-r from-orange-100 to-yellow-100 rounded-2xl shadow-lg p-6 border-2 border-zzonde-orange">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+            <i class="fas fa-lightbulb text-zzonde-yellow mr-3"></i>
+            오늘의 건강 팁
+          </h3>
+          <div class="space-y-3">
+            <div class="flex items-start space-x-3">
+              <i class="fas fa-check-circle text-2xl text-zzonde-orange mt-1"></i>
+              <p class="text-xl text-gray-800">하루 30분 이상 가벼운 산책을 하세요</p>
+            </div>
+            <div class="flex items-start space-x-3">
+              <i class="fas fa-check-circle text-2xl text-zzonde-orange mt-1"></i>
+              <p class="text-xl text-gray-800">물을 자주 마시는 습관을 들이세요 (8잔/일)</p>
+            </div>
+            <div class="flex items-start space-x-3">
+              <i class="fas fa-check-circle text-2xl text-zzonde-orange mt-1"></i>
+              <p class="text-xl text-gray-800">규칙적인 수면 시간을 유지하세요 (7-8시간)</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Emergency Button */}
+        <div class="mt-6 bg-red-500 rounded-2xl shadow-2xl p-6">
+          <button 
+            onclick="emergencyCall()"
+            class="w-full flex items-center justify-center space-x-4"
+          >
+            <i class="fas fa-phone-alt text-6xl text-white"></i>
+            <div class="text-left">
+              <p class="text-white text-xl font-semibold">긴급 상황 시</p>
+              <p class="text-white text-3xl font-bold">119 바로 연결</p>
+            </div>
+          </button>
+        </div>
+      </main>
+
+      <script src="/static/app.js"></script>
+    </div>
+  )
+})
+
 // 설정 페이지
 app.get('/settings', (c) => {
   return c.render(

@@ -340,4 +340,66 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// ===== Weather Functions =====
+
+function speakWeather() {
+  const temp = document.getElementById('currentTemp')?.textContent || '15';
+  const weatherText = `현재 서울 날씨를 알려드립니다. 
+    기온은 섭씨 ${temp}도이며, 맑은 날씨입니다. 
+    습도는 60퍼센트, 바람은 초속 2.5미터입니다. 
+    미세먼지와 초미세먼지 모두 좋음 단계로, 
+    야외 활동하기 좋은 날씨입니다.`;
+  
+  speak(weatherText);
+}
+
+// ===== Health Functions =====
+
+function takeMedicine(medicineName) {
+  speak(`${medicineName} 복용을 완료하셨습니다. 좋아요!`);
+  
+  // Show success message
+  const message = document.createElement('div');
+  message.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-8 py-4 rounded-full text-xl font-bold shadow-2xl z-50 animate-pulse';
+  message.innerHTML = '<i class="fas fa-check-circle mr-2"></i>복약 완료!';
+  document.body.appendChild(message);
+  
+  setTimeout(() => {
+    message.remove();
+  }, 3000);
+}
+
+function speakMedicineReminder() {
+  const reminderText = `오늘의 복약 일정을 알려드립니다. 
+    아침 8시 혈압약, 완료. 
+    점심 12시 30분 소화제, 완료. 
+    저녁 6시 비타민, 아직 복용하지 않으셨습니다. 
+    잊지 말고 복용하세요!`;
+  
+  speak(reminderText);
+}
+
+function emergencyCall() {
+  if (confirm('119에 연결하시겠습니까?')) {
+    speak('119에 연결합니다');
+    // In real app, this would trigger actual emergency call
+    alert('실제 앱에서는 119에 자동으로 연결됩니다.');
+  }
+}
+
+// ===== Initialize Page-specific Content =====
+
+// Check current page and load appropriate content
+const currentPath = window.location.pathname;
+
+if (currentPath === '/weather') {
+  console.log('Weather page loaded');
+  // Could load real weather data here
+}
+
+if (currentPath === '/health') {
+  console.log('Health page loaded');
+  // Could load health data from localStorage or API
+}
+
 console.log('ZZONDE initialized successfully! 🚀');
