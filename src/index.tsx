@@ -750,19 +750,22 @@ app.get('/settings', (c) => {
                 <div class="flex space-x-2">
                   <button 
                     onclick="changeTextSize('small')" 
-                    class="px-6 py-3 border-2 border-gray-300 rounded-lg font-semibold text-lg hover:bg-gray-50 transition-all"
+                    class="px-6 py-3 border-2 border-gray-300 rounded-lg font-semibold text-lg text-gray-800 hover:bg-gray-50 transition-all"
+                    style="color: #222222 !important;"
                   >
                     작게
                   </button>
                   <button 
                     onclick="changeTextSize('medium')" 
                     class="px-6 py-3 bg-zzonde-orange text-white rounded-lg font-semibold text-lg hover:bg-zzonde-yellow transition-all"
+                    style="color: #FFFFFF !important; background-color: #FF6D00 !important;"
                   >
                     보통
                   </button>
                   <button 
                     onclick="changeTextSize('large')" 
-                    class="px-6 py-3 border-2 border-gray-300 rounded-lg font-semibold text-xl hover:bg-gray-50 transition-all"
+                    class="px-6 py-3 border-2 border-gray-300 rounded-lg font-semibold text-xl text-gray-800 hover:bg-gray-50 transition-all"
+                    style="color: #222222 !important; font-size: 20px !important; font-weight: 700 !important;"
                   >
                     크게
                   </button>
