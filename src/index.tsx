@@ -748,9 +748,24 @@ app.get('/settings', (c) => {
               <div class="flex items-center justify-between py-4 border-b">
                 <span class="text-xl">글씨 크기</span>
                 <div class="flex space-x-2">
-                  <button onclick="changeTextSize('small')" class="px-4 py-2 border-2 rounded-lg">작게</button>
-                  <button onclick="changeTextSize('medium')" class="px-4 py-2 bg-zzonde-orange text-white rounded-lg">보통</button>
-                  <button onclick="changeTextSize('large')" class="px-4 py-2 border-2 rounded-lg">크게</button>
+                  <button 
+                    onclick="changeTextSize('small')" 
+                    class="px-6 py-3 border-2 border-gray-300 rounded-lg font-semibold text-lg hover:bg-gray-50 transition-all"
+                  >
+                    작게
+                  </button>
+                  <button 
+                    onclick="changeTextSize('medium')" 
+                    class="px-6 py-3 bg-zzonde-orange text-white rounded-lg font-semibold text-lg hover:bg-zzonde-yellow transition-all"
+                  >
+                    보통
+                  </button>
+                  <button 
+                    onclick="changeTextSize('large')" 
+                    class="px-6 py-3 border-2 border-gray-300 rounded-lg font-semibold text-xl hover:bg-gray-50 transition-all"
+                  >
+                    크게
+                  </button>
                 </div>
               </div>
               <div class="flex items-center justify-between py-4 border-b">
