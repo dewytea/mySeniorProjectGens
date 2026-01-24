@@ -739,6 +739,83 @@ app.get('/settings', (c) => {
             </div>
           </div>
 
+          {/* 나의 마실 범위 섹션 */}
+          <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl shadow-lg p-6 border-2 border-green-200">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+              <i class="fas fa-walking text-green-600 mr-3"></i>
+              나의 마실 범위 🚶
+            </h2>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between py-4 border-b border-green-200">
+                <div>
+                  <span class="text-xl font-semibold text-gray-800">현재 동네</span>
+                  <p class="text-lg text-gray-600 mt-1" id="currentLocation">설정 필요</p>
+                </div>
+                <button 
+                  onclick="changeLocation()"
+                  class="px-6 py-3 bg-green-500 text-white rounded-lg font-semibold text-lg hover:bg-green-600 transition-all shadow-md"
+                >
+                  <i class="fas fa-map-marker-alt mr-2"></i>동네 변경
+                </button>
+              </div>
+              
+              <div class="py-4 border-b border-green-200">
+                <label class="text-xl font-semibold text-gray-800 block mb-3">오늘은 어디까지 마실 나가실래요?</label>
+                <div class="space-y-3">
+                  <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-all">
+                    <input 
+                      type="radio" 
+                      name="range" 
+                      value="우리동네만" 
+                      onchange="updateRange(this.value)"
+                      class="w-6 h-6 text-green-600"
+                    />
+                    <div class="ml-4">
+                      <div class="text-xl font-semibold">🏠 우리 동네만</div>
+                      <div class="text-base text-gray-600">걸어서 10분 거리</div>
+                    </div>
+                  </label>
+                  
+                  <label class="flex items-center p-4 border-2 border-green-500 bg-green-50 rounded-lg cursor-pointer">
+                    <input 
+                      type="radio" 
+                      name="range" 
+                      value="옆동네까지" 
+                      onchange="updateRange(this.value)"
+                      class="w-6 h-6 text-green-600"
+                      checked
+                    />
+                    <div class="ml-4">
+                      <div class="text-xl font-semibold">🏘️ 옆 동네까지 (추천)</div>
+                      <div class="text-base text-gray-600">걸어서 20분 거리</div>
+                    </div>
+                  </label>
+                  
+                  <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-all">
+                    <input 
+                      type="radio" 
+                      name="range" 
+                      value="구전체" 
+                      onchange="updateRange(this.value)"
+                      class="w-6 h-6 text-green-600"
+                    />
+                    <div class="ml-4">
+                      <div class="text-xl font-semibold">🌆 구 전체</div>
+                      <div class="text-base text-gray-600">버스 타고 30분 거리</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              
+              <div class="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                <p class="text-lg text-blue-800">
+                  <i class="fas fa-info-circle mr-2"></i>
+                  <span class="font-semibold">고무줄 마실 범위</span>: 근처에 소식이 없으면 자동으로 범위를 넓혀 드려요!
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div class="bg-white rounded-2xl shadow-lg p-6">
             <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
               <i class="fas fa-text-height text-zzonde-orange mr-3"></i>

@@ -49,6 +49,34 @@ function loadUserProfile() {
   if (aiModeToggle) {
     const useAI = localStorage.getItem('zzonde_use_ai') === 'true';
     aiModeToggle.checked = useAI;
+  }
+  
+  // Load location settings
+  loadLocation();
+  const currentLocationEl = document.getElementById('currentLocation');
+  if (currentLocationEl) {
+    if (isLocationSet()) {
+      currentLocationEl.textContent = `${userLocation.sido} ${userLocation.sigungu} ${userLocation.dong}`;
+      currentLocationEl.style.color = '#059669'; // green-600
+      currentLocationEl.style.fontWeight = 'bold';
+    } else {
+      currentLocationEl.textContent = '아직 설정하지 않았어요';
+      currentLocationEl.style.color = '#ef4444'; // red-500
+    }
+  }
+  
+  // Load range settings
+  const rangeInputs = document.querySelectorAll('input[name="range"]');
+  rangeInputs.forEach(input => {
+    if (input.value === userLocation.range) {
+      input.checked = true;
+      // Highlight selected option
+      input.parentElement.classList.add('border-green-500', 'bg-green-50');
+      input.parentElement.classList.remove('border-gray-300');
+    }
+  });
+}
+    aiModeToggle.checked = useAI;
     
     // Update toggle UI
     const toggleSpan = aiModeToggle.nextElementSibling;
@@ -806,3 +834,225 @@ if (currentPath === '/health') {
 }
 
 console.log('ZZONDE initialized successfully! 🚀');
+
+// ===== 🏘️ Location Management (마실 범위) =====
+
+// Location data structure
+let userLocation = {
+  sido: localStorage.getItem('zzonde_sido') || null,
+  sigungu: localStorage.getItem('zzonde_sigungu') || null,
+  dong: localStorage.getItem('zzonde_dong') || null,
+  range: localStorage.getItem('zzonde_range') || '옆동네까지' // 우리동네만, 옆동네까지, 구전체
+};
+
+// Korean administrative divisions data (simplified for MVP)
+const locationData = {
+  '서울특별시': {
+    '강남구': ['역삼동', '대치동', '삼성동', '청담동', '논현동'],
+    '서초구': ['서초동', '반포동', '방배동', '잠원동', '양재동'],
+    '송파구': ['잠실동', '신천동', '풍납동', '송파동', '가락동'],
+    '강동구': ['천호동', '성내동', '길동', '둔촌동', '암사동']
+  },
+  '부산광역시': {
+    '해운대구': ['우동', '중동', '좌동', '송정동', '재송동'],
+    '수영구': ['광안동', '남천동', '수영동', '망미동', '민락동']
+  },
+  '인천광역시': {
+    '남동구': ['구월동', '간석동', '만수동', '서창동', '장수동'],
+    '연수구': ['송도동', '옥련동', '동춘동', '청학동', '연수동']
+  },
+  '대구광역시': {
+    '수성구': ['범어동', '만촌동', '수성동', '황금동', '중동'],
+    '달서구': ['성당동', '두류동', '본동', '감삼동', '죽전동']
+  },
+  '경기도': {
+    '수원시': ['팔달구', '장안구', '권선구', '영통구'],
+    '성남시': ['분당구', '수정구', '중원구'],
+    '고양시': ['일산동구', '일산서구', '덕양구']
+  }
+};
+
+// Save location to localStorage
+function saveLocation() {
+  localStorage.setItem('zzonde_sido', userLocation.sido || '');
+  localStorage.setItem('zzonde_sigungu', userLocation.sigungu || '');
+  localStorage.setItem('zzonde_dong', userLocation.dong || '');
+  localStorage.setItem('zzonde_range', userLocation.range || '옆동네까지');
+}
+
+// Load location from localStorage
+function loadLocation() {
+  userLocation.sido = localStorage.getItem('zzonde_sido') || null;
+  userLocation.sigungu = localStorage.getItem('zzonde_sigungu') || null;
+  userLocation.dong = localStorage.getItem('zzonde_dong') || null;
+  userLocation.range = localStorage.getItem('zzonde_range') || '옆동네까지';
+}
+
+// Check if location is set
+function isLocationSet() {
+  return userLocation.sido && userLocation.sigungu && userLocation.dong;
+}
+
+// Show location onboarding modal
+function showLocationOnboarding() {
+  const modal = document.createElement('div');
+  modal.id = 'locationModal';
+  modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+  modal.style.display = 'flex';
+  
+  const sidoOptions = Object.keys(locationData).map(sido => 
+    `<option value="${sido}">${sido}</option>`
+  ).join('');
+  
+  modal.innerHTML = `
+    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 animate-fade-in">
+      <div class="text-center mb-6">
+        <div class="text-6xl mb-4">🏘️</div>
+        <h2 class="text-3xl font-bold text-gray-800 mb-2">어디에서 마실 나가시나요?</h2>
+        <p class="text-lg text-gray-600">가까운 동네 소식을 보여드릴게요</p>
+      </div>
+      
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xl font-semibold text-gray-800 mb-2">
+            <i class="fas fa-map-marked-alt text-zzonde-orange mr-2"></i>시/도
+          </label>
+          <select id="sidoSelect" class="w-full px-4 py-3 text-xl border-2 border-gray-300 rounded-lg focus:border-zzonde-orange focus:outline-none">
+            <option value="">선택해주세요</option>
+            ${sidoOptions}
+          </select>
+        </div>
+        
+        <div id="sigunguContainer" style="display: none;">
+          <label class="block text-xl font-semibold text-gray-800 mb-2">
+            <i class="fas fa-building text-zzonde-orange mr-2"></i>구/군
+          </label>
+          <select id="sigunguSelect" class="w-full px-4 py-3 text-xl border-2 border-gray-300 rounded-lg focus:border-zzonde-orange focus:outline-none">
+            <option value="">선택해주세요</option>
+          </select>
+        </div>
+        
+        <div id="dongContainer" style="display: none;">
+          <label class="block text-xl font-semibold text-gray-800 mb-2">
+            <i class="fas fa-home text-zzonde-orange mr-2"></i>동/읍/면
+          </label>
+          <select id="dongSelect" class="w-full px-4 py-3 text-xl border-2 border-gray-300 rounded-lg focus:border-zzonde-orange focus:outline-none">
+            <option value="">선택해주세요</option>
+          </select>
+        </div>
+      </div>
+      
+      <button 
+        id="confirmLocationBtn" 
+        class="w-full mt-6 bg-gradient-to-r from-zzonde-orange to-zzonde-yellow text-white px-8 py-4 rounded-full font-bold text-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled
+      >
+        <i class="fas fa-check-circle mr-2"></i>이 동네로 정할게요!
+      </button>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  
+  // Event listeners
+  const sidoSelect = document.getElementById('sidoSelect');
+  const sigunguSelect = document.getElementById('sigunguSelect');
+  const dongSelect = document.getElementById('dongSelect');
+  const sigunguContainer = document.getElementById('sigunguContainer');
+  const dongContainer = document.getElementById('dongContainer');
+  const confirmBtn = document.getElementById('confirmLocationBtn');
+  
+  sidoSelect.addEventListener('change', function() {
+    const sido = this.value;
+    if (sido && locationData[sido]) {
+      sigunguContainer.style.display = 'block';
+      sigunguSelect.innerHTML = '<option value="">선택해주세요</option>' +
+        Object.keys(locationData[sido]).map(sigungu => 
+          `<option value="${sigungu}">${sigungu}</option>`
+        ).join('');
+      dongContainer.style.display = 'none';
+      dongSelect.innerHTML = '<option value="">선택해주세요</option>';
+      confirmBtn.disabled = true;
+    }
+  });
+  
+  sigunguSelect.addEventListener('change', function() {
+    const sido = sidoSelect.value;
+    const sigungu = this.value;
+    if (sido && sigungu && locationData[sido][sigungu]) {
+      dongContainer.style.display = 'block';
+      const dongList = locationData[sido][sigungu];
+      dongSelect.innerHTML = '<option value="">선택해주세요</option>' +
+        dongList.map(dong => 
+          `<option value="${dong}">${dong}</option>`
+        ).join('');
+      confirmBtn.disabled = true;
+    }
+  });
+  
+  dongSelect.addEventListener('change', function() {
+    confirmBtn.disabled = !this.value;
+  });
+  
+  confirmBtn.addEventListener('click', function() {
+    userLocation.sido = sidoSelect.value;
+    userLocation.sigungu = sigunguSelect.value;
+    userLocation.dong = dongSelect.value;
+    saveLocation();
+    
+    modal.remove();
+    speak(`${userLocation.dong}으로 설정되었습니다. 이제 가까운 동네 소식을 보여드릴게요!`);
+    showNotification(`마실 동네: ${userLocation.dong} 🏘️`, 'success');
+    
+    // Reload current page to show filtered content
+    if (window.location.pathname !== '/') {
+      window.location.reload();
+    }
+  });
+}
+
+// Change location (for settings page)
+function changeLocation() {
+  showLocationOnboarding();
+}
+
+// Get location display text
+function getLocationText() {
+  if (!isLocationSet()) return '동네 설정 필요';
+  return `${userLocation.dong}`;
+}
+
+// Get location range display text
+function getRangeText() {
+  const ranges = {
+    '우리동네만': '걸어서 10분',
+    '옆동네까지': '걸어서 20분',
+    '구전체': '버스 타고 30분'
+  };
+  return ranges[userLocation.range] || '걸어서 20분';
+}
+
+// Update range setting
+function updateRange(range) {
+  userLocation.range = range;
+  saveLocation();
+  showNotification(`마실 범위: ${getRangeText()} 🚶`, 'success');
+  
+  // Reload if on content pages
+  if (['/jobs', '/community', '/marketplace'].includes(window.location.pathname)) {
+    window.location.reload();
+  }
+}
+
+// Check location on page load
+document.addEventListener('DOMContentLoaded', function() {
+  loadLocation();
+  
+  // Show onboarding if location not set and on main pages
+  const mainPages = ['/', '/jobs', '/community', '/marketplace'];
+  if (!isLocationSet() && mainPages.includes(window.location.pathname)) {
+    setTimeout(() => {
+      showLocationOnboarding();
+    }, 1000); // Show after 1 second
+  }
+});
