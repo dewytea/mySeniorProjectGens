@@ -181,6 +181,11 @@ app.get('/', (c) => {
 
         {/* Quick Actions */}
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+          <a href="/companion" class="quick-action-card bg-gradient-to-br from-zzonde-orange to-zzonde-yellow rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all text-center border-2 border-transparent hover:border-white">
+            <i class="fas fa-robot text-5xl text-white mb-3"></i>
+            <p class="text-xl font-bold text-white">존디와 대화</p>
+            <p class="text-sm text-white opacity-90 mt-1">AI 동반자</p>
+          </a>
           <a href="/news" class="quick-action-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all text-center border-2 border-transparent hover:border-zzonde-orange">
             <i class="fas fa-newspaper text-5xl text-zzonde-orange mb-3"></i>
             <p class="text-xl font-bold text-gray-800">뉴스</p>
@@ -775,6 +780,169 @@ app.post('/api/auth/login', async (c) => {
       error: '로그인 중 오류가 발생했습니다'
     }, 500);
   }
+});
+
+// 음성 동반자 '존디' 페이지
+app.get('/companion', (c) => {
+  return c.render(
+    <div class="min-h-screen bg-gradient-to-b from-orange-50 to-yellow-50 pb-32">
+      <header class="bg-zzonde-orange text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <a href="/" class="text-white hover:text-gray-200">
+                <i class="fas fa-arrow-left text-2xl"></i>
+              </a>
+              <h1 class="text-2xl font-bold">존디와 대화</h1>
+            </div>
+            <button 
+              onclick="toggleCompanionSettings()"
+              class="text-white hover:text-gray-200"
+            >
+              <i class="fas fa-cog text-2xl"></i>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="max-w-4xl mx-auto px-4 py-6">
+        {/* AI 캐릭터 */}
+        <div class="text-center mb-8">
+          <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-zzonde-orange to-zzonde-yellow flex items-center justify-center shadow-2xl">
+            <i class="fas fa-robot text-6xl text-white"></i>
+          </div>
+          <h2 class="text-3xl font-bold text-gray-800 mb-2">존디</h2>
+          <p class="text-xl text-gray-600">당신의 쫀득한 AI 동반자 🍬</p>
+        </div>
+
+        {/* 대화 내역 */}
+        <div id="conversationContainer" class="bg-white rounded-3xl shadow-lg p-6 mb-6 min-h-[400px] max-h-[500px] overflow-y-auto">
+          <div id="conversationList" class="space-y-4">
+            {/* 대화가 여기에 표시됩니다 */}
+            <div class="text-center text-gray-400 py-12">
+              <i class="fas fa-comments text-6xl mb-4"></i>
+              <p class="text-xl">아래 마이크 버튼을 눌러 대화를 시작하세요</p>
+            </div>
+          </div>
+        </div>
+
+        {/* 빠른 응답 버튼 */}
+        <div id="quickReplies" class="flex flex-wrap gap-3 mb-6 justify-center">
+          <button 
+            onclick="sendQuickMessage('오늘 날씨 어때?')"
+            class="bg-white text-gray-700 px-6 py-3 rounded-full font-semibold text-lg border-2 border-gray-300 hover:border-zzonde-orange hover:text-zzonde-orange transition-all shadow-md"
+          >
+            🌤️ 날씨 알려줘
+          </button>
+          <button 
+            onclick="sendQuickMessage('오늘 뉴스 보여줘')"
+            class="bg-white text-gray-700 px-6 py-3 rounded-full font-semibold text-lg border-2 border-gray-300 hover:border-zzonde-orange hover:text-zzonde-orange transition-all shadow-md"
+          >
+            📰 뉴스 보여줘
+          </button>
+          <button 
+            onclick="sendQuickMessage('약 먹을 시간이야?')"
+            class="bg-white text-gray-700 px-6 py-3 rounded-full font-semibold text-lg border-2 border-gray-300 hover:border-zzonde-orange hover:text-zzonde-orange transition-all shadow-md"
+          >
+            💊 약 시간 확인
+          </button>
+        </div>
+
+        {/* 컨텍스트 정보 (디버깅용, 나중에 숨길 수 있음) */}
+        <div id="contextInfo" class="bg-blue-50 rounded-2xl p-4 mb-6 text-sm" style="display: none;">
+          <p class="font-semibold text-blue-800 mb-2">🧠 기억된 정보:</p>
+          <div id="contextDetails" class="text-blue-700"></div>
+        </div>
+      </main>
+
+      {/* 거대한 마이크 버튼 (Floating Action Button) */}
+      <div class="fixed bottom-24 left-0 right-0 flex justify-center z-40">
+        <button 
+          id="companionVoiceBtn"
+          onclick="startCompanionVoice()"
+          class="w-28 h-28 rounded-full bg-gradient-to-br from-zzonde-orange to-zzonde-yellow text-white shadow-2xl hover:shadow-3xl transition-all transform hover:scale-110 flex items-center justify-center"
+          style="box-shadow: 0 10px 40px rgba(255, 109, 0, 0.4);"
+        >
+          <i class="fas fa-microphone text-5xl"></i>
+        </button>
+      </div>
+
+      {/* 설정 패널 */}
+      <div id="companionSettings" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">동반자 설정</h2>
+            <button 
+              onclick="toggleCompanionSettings()"
+              class="text-gray-500 hover:text-gray-700"
+            >
+              <i class="fas fa-times text-2xl"></i>
+            </button>
+          </div>
+
+          <div class="space-y-4">
+            <div class="flex items-center justify-between py-4 border-b">
+              <div>
+                <p class="text-xl font-semibold text-gray-800">능동적 대화</p>
+                <p class="text-base text-gray-600">존디가 먼저 말을 걸게 합니다</p>
+              </div>
+              <label class="relative inline-block w-16 h-8">
+                <input 
+                  type="checkbox" 
+                  id="activeGreeting"
+                  checked
+                  onchange="toggleActiveGreeting(this.checked)"
+                  class="opacity-0 w-0 h-0" 
+                />
+                <span class="absolute cursor-pointer inset-0 bg-zzonde-orange rounded-full transition-all"></span>
+              </label>
+            </div>
+
+            <div class="flex items-center justify-between py-4 border-b">
+              <div>
+                <p class="text-xl font-semibold text-gray-800">안전 모니터링</p>
+                <p class="text-base text-gray-600">위급 상황을 자동으로 감지합니다</p>
+              </div>
+              <label class="relative inline-block w-16 h-8">
+                <input 
+                  type="checkbox" 
+                  id="safetyMonitoring"
+                  checked
+                  class="opacity-0 w-0 h-0" 
+                />
+                <span class="absolute cursor-pointer inset-0 bg-zzonde-orange rounded-full transition-all"></span>
+              </label>
+            </div>
+
+            <div class="py-4">
+              <p class="text-xl font-semibold text-gray-800 mb-3">비상 연락처</p>
+              <button 
+                onclick="manageEmergencyContacts()"
+                class="w-full bg-zzonde-orange text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-zzonde-yellow transition-all"
+              >
+                <i class="fas fa-phone mr-2"></i>연락처 관리
+              </button>
+            </div>
+
+            <div class="py-4">
+              <button 
+                onclick="showContextDebug()"
+                class="w-full bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-semibold text-lg hover:bg-gray-300 transition-all"
+              >
+                <i class="fas fa-brain mr-2"></i>기억된 정보 보기
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="/static/app.js"></script>
+      <script src="/static/auth.js"></script>
+      <script src="/static/memory_service.js"></script>
+      <script src="/static/safety_monitor.js"></script>
+      <script src="/static/companion.js"></script>
+    </div>
+  )
 });
 
 // 로그인/회원가입 페이지
