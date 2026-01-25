@@ -86,7 +86,7 @@ BG:        White & Light Grey       - 깔끔한 배경
 ## 🔗 접속 URL
 
 ### **📱 라이브 데모**
-**현재 실행 중:** https://3000-iapi1zag7mc1w1xg3hefd-2b54fc91.sandbox.novita.ai
+**현재 실행 중:** https://5173-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai
 
 - **스마트폰으로 접속**: 위 링크를 모바일 브라우저에서 열기
 - **음성 인식 테스트**: Chrome 브라우저 필수 (Safari는 제한적)
