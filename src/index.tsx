@@ -160,23 +160,23 @@ app.get('/', (c) => {
             <div class="bg-white bg-opacity-20 rounded-xl p-4 mb-4 backdrop-blur-sm">
               <p class="text-lg mb-2 font-semibold">🌐 배포 URL:</p>
               <a 
-                href="https://5173-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai"
+                href="https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai"
                 target="_blank"
                 class="text-xl font-mono bg-white text-purple-600 px-6 py-3 rounded-lg inline-block hover:bg-yellow-100 transition-all shadow-lg"
               >
-                https://5173-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai
+                https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai
               </a>
             </div>
             <div class="flex justify-center space-x-4">
               <a 
-                href="https://5173-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai"
+                href="https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai"
                 target="_blank"
                 class="bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-xl hover:bg-yellow-300 transition-all shadow-lg"
               >
                 <i class="fas fa-external-link-alt mr-2"></i>새 창으로 열기
               </a>
               <button 
-                onclick="navigator.clipboard.writeText('https://5173-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai'); alert('링크가 복사되었습니다!');"
+                onclick="navigator.clipboard.writeText('https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai'); alert('링크가 복사되었습니다!');"
                 class="bg-yellow-400 text-purple-900 px-8 py-4 rounded-full font-bold text-xl hover:bg-yellow-300 transition-all shadow-lg"
               >
                 <i class="fas fa-copy mr-2"></i>링크 복사
