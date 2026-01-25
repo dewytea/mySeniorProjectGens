@@ -149,6 +149,196 @@ app.get('/', (c) => {
 
       {/* Main Content */}
       <main class="max-w-7xl mx-auto px-4 py-6">
+        {/* Live Demo Banner */}
+        <div class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 rounded-3xl shadow-2xl p-8 mb-6 text-white animate-pulse">
+          <div class="text-center">
+            <h2 class="text-3xl font-bold mb-3 flex items-center justify-center">
+              <i class="fas fa-rocket mr-3 text-4xl"></i>
+              🎉 라이브 배포 완료! 🎉
+            </h2>
+            <p class="text-2xl mb-4 font-semibold">지금 바로 체험해보세요!</p>
+            <div class="bg-white bg-opacity-20 rounded-xl p-4 mb-4 backdrop-blur-sm">
+              <p class="text-lg mb-2 font-semibold">🌐 배포 URL:</p>
+              <a 
+                href="https://5173-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai"
+                target="_blank"
+                class="text-xl font-mono bg-white text-purple-600 px-6 py-3 rounded-lg inline-block hover:bg-yellow-100 transition-all shadow-lg"
+              >
+                https://5173-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai
+              </a>
+            </div>
+            <div class="flex justify-center space-x-4">
+              <a 
+                href="https://5173-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai"
+                target="_blank"
+                class="bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-xl hover:bg-yellow-300 transition-all shadow-lg"
+              >
+                <i class="fas fa-external-link-alt mr-2"></i>새 창으로 열기
+              </a>
+              <button 
+                onclick="navigator.clipboard.writeText('https://5173-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai'); alert('링크가 복사되었습니다!');"
+                class="bg-yellow-400 text-purple-900 px-8 py-4 rounded-full font-bold text-xl hover:bg-yellow-300 transition-all shadow-lg"
+              >
+                <i class="fas fa-copy mr-2"></i>링크 복사
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Feature Demo Center */}
+        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-6">
+          <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center flex items-center justify-center">
+            <i class="fas fa-star text-zzonde-yellow mr-3 text-4xl"></i>
+            ZZonde MVP 완전 기능 체험
+            <i class="fas fa-star text-zzonde-yellow ml-3 text-4xl"></i>
+          </h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+            <div class="bg-gradient-to-br from-orange-100 to-yellow-100 rounded-2xl p-6 border-2 border-zzonde-orange">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-robot text-4xl text-zzonde-orange mr-3"></i>
+                <h3 class="text-2xl font-bold text-gray-800">AI 동반자 '존디'</h3>
+              </div>
+              <ul class="space-y-2 text-lg text-gray-700">
+                <li><i class="fas fa-check text-green-600 mr-2"></i>대화 기억 기능</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>능동적 인사</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>안전 모니터링</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>음성 인터페이스</li>
+              </ul>
+              <a 
+                href="/companion"
+                class="block mt-4 bg-zzonde-orange text-white px-6 py-3 rounded-full font-bold text-center hover:bg-zzonde-yellow transition-all"
+              >
+                지금 체험하기 →
+              </a>
+            </div>
+
+            <div class="bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl p-6 border-2 border-blue-400">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-cloud-sun text-4xl text-blue-600 mr-3"></i>
+                <h3 class="text-2xl font-bold text-gray-800">날씨 정보</h3>
+              </div>
+              <ul class="space-y-2 text-lg text-gray-700">
+                <li><i class="fas fa-check text-green-600 mr-2"></i>실시간 날씨</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>대기질 정보</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>시간별 예보</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>음성 안내</li>
+              </ul>
+              <a 
+                href="/weather"
+                class="block mt-4 bg-blue-500 text-white px-6 py-3 rounded-full font-bold text-center hover:bg-blue-600 transition-all"
+              >
+                날씨 확인하기 →
+              </a>
+            </div>
+
+            <div class="bg-gradient-to-br from-red-100 to-pink-100 rounded-2xl p-6 border-2 border-red-400">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-pills text-4xl text-red-600 mr-3"></i>
+                <h3 class="text-2xl font-bold text-gray-800">복약 관리</h3>
+              </div>
+              <ul class="space-y-2 text-lg text-gray-700">
+                <li><i class="fas fa-check text-green-600 mr-2"></i>복약 일정</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>알림 기능</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>복약 통계</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>음성 안내</li>
+              </ul>
+              <a 
+                href="/health"
+                class="block mt-4 bg-red-500 text-white px-6 py-3 rounded-full font-bold text-center hover:bg-red-600 transition-all"
+              >
+                건강 관리하기 →
+              </a>
+            </div>
+
+            <div class="bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl p-6 border-2 border-green-400">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-newspaper text-4xl text-green-600 mr-3"></i>
+                <h3 class="text-2xl font-bold text-gray-800">뉴스</h3>
+              </div>
+              <ul class="space-y-2 text-lg text-gray-700">
+                <li><i class="fas fa-check text-green-600 mr-2"></i>6개 카테고리</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>필터링 기능</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>TTS 읽어주기</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>뉴스 공유</li>
+              </ul>
+              <a 
+                href="/news"
+                class="block mt-4 bg-green-500 text-white px-6 py-3 rounded-full font-bold text-center hover:bg-green-600 transition-all"
+              >
+                뉴스 보기 →
+              </a>
+            </div>
+
+            <div class="bg-gradient-to-br from-purple-100 to-indigo-100 rounded-2xl p-6 border-2 border-purple-400">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-user-circle text-4xl text-purple-600 mr-3"></i>
+                <h3 class="text-2xl font-bold text-gray-800">회원가입/로그인</h3>
+              </div>
+              <ul class="space-y-2 text-lg text-gray-700">
+                <li><i class="fas fa-check text-green-600 mr-2"></i>간편 회원가입</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>프로필 관리</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>설정 저장</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>보안 기능</li>
+              </ul>
+              <a 
+                href="/auth/login"
+                class="block mt-4 bg-purple-500 text-white px-6 py-3 rounded-full font-bold text-center hover:bg-purple-600 transition-all"
+              >
+                로그인하기 →
+              </a>
+            </div>
+
+            <div class="bg-gradient-to-br from-yellow-100 to-orange-100 rounded-2xl p-6 border-2 border-yellow-400">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-microphone text-4xl text-yellow-600 mr-3"></i>
+                <h3 class="text-2xl font-bold text-gray-800">음성 인식</h3>
+              </div>
+              <ul class="space-y-2 text-lg text-gray-700">
+                <li><i class="fas fa-check text-green-600 mr-2"></i>AI 인텐트 인식</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>페이지 이동</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>명령 실행</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>TTS 응답</li>
+              </ul>
+              <button 
+                onclick="document.getElementById('voiceBtn').click()"
+                class="block w-full mt-4 bg-yellow-500 text-white px-6 py-3 rounded-full font-bold text-center hover:bg-yellow-600 transition-all"
+              >
+                음성 명령 시작 →
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-r from-green-100 to-blue-100 rounded-2xl p-6 border-2 border-green-400">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+              <i class="fas fa-code text-green-600 mr-3"></i>
+              기술 스택 & 아키텍처
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="text-center bg-white rounded-xl p-4 shadow">
+                <i class="fas fa-server text-3xl text-orange-500 mb-2"></i>
+                <p class="font-bold text-lg">Backend</p>
+                <p class="text-base text-gray-600">Hono</p>
+              </div>
+              <div class="text-center bg-white rounded-xl p-4 shadow">
+                <i class="fab fa-react text-3xl text-blue-500 mb-2"></i>
+                <p class="font-bold text-lg">Frontend</p>
+                <p class="text-base text-gray-600">TSX</p>
+              </div>
+              <div class="text-center bg-white rounded-xl p-4 shadow">
+                <i class="fas fa-microphone-alt text-3xl text-purple-500 mb-2"></i>
+                <p class="font-bold text-lg">Voice</p>
+                <p class="text-base text-gray-600">Web Speech API</p>
+              </div>
+              <div class="text-center bg-white rounded-xl p-4 shadow">
+                <i class="fas fa-robot text-3xl text-pink-500 mb-2"></i>
+                <p class="font-bold text-lg">AI</p>
+                <p class="text-base text-gray-600">GPT-5-mini</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Text Size Control */}
         <div class="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl p-6 mb-6 shadow-md">
           <div class="flex items-center justify-between">
