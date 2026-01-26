@@ -54,11 +54,22 @@
 
 ---
 
-## 🚀 현재 구현된 기능 (MVP v2.0)
+## 🚀 현재 구현된 기능 (MVP v2.1)
 
-### ✅ 완료된 모든 기능 (Phase 2 완성!)
+### ✅ 완료된 모든 기능 (Phase 2 + 긴급 SOS!)
 
-#### 0. **🎯 라이브 데모 센터** ⭐ NEW!
+#### 0. **🆘 긴급 SOS 시스템** ⭐ NEW!
+- 플로팅 SOS 버튼 (우측 하단 빨간색)
+- 3초 자동 카운트다운 후 119 연결
+- 원터치 119 및 가족 긴급 연락
+- GPS 위치 정보 자동 전송
+- SMS로 위치 정보 가족 공유
+- 음성 안내 및 진동 피드백
+- 설정 페이지에서 비상 연락처 관리
+- 실수 방지 취소 기능
+- SOS 히스토리 로그 기록
+
+#### 1. **🎯 라이브 데모 센터**
 - 홈 화면에 배포 링크 직접 표시
 - 6개 주요 기능 시연 카드
 - 원클릭 URL 복사 및 새 창 열기
@@ -152,23 +163,26 @@ BG:        White & Light Grey       - 깔끔한 배경
 ## 🔗 접속 URL
 
 ### **📱 라이브 데모 (최신 업데이트!)**
-**🎉 모든 기능이 완성되었습니다! 지금 바로 체험해보세요! 🎉**
+**🎉 긴급 SOS 시스템 추가! 시니어 안전 기능 강화! 🚨**
 
-**메인 데모:** https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai
+**메인 데모:** https://5175-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai
 
 ### **🤖 주요 페이지 바로가기**
-- **홈 화면 (데모 센터)**: https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai/
-- **AI 동반자 '존디'**: https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai/companion
-- **날씨 정보**: https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai/weather
-- **건강 관리**: https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai/health
-- **뉴스**: https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai/news
-- **로그인**: https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai/auth/login
+- **홈 화면 (데모 센터)**: https://5175-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai/
+- **AI 동반자 '존디'**: https://5175-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai/companion
+- **날씨 정보**: https://5175-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai/weather
+- **건강 관리**: https://5175-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai/health
+- **뉴스**: https://5175-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai/news
+- **로그인**: https://5175-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai/auth/login
+- **설정 (SOS 관리)**: https://5175-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai/settings
 
-### **✨ 새로 추가된 기능**
-- 🎯 **라이브 데모 센터**: 홈 화면에서 모든 기능을 한눈에 확인하고 바로 체험!
+### **✨ 최신 추가 기능**
+- 🆘 **긴급 SOS 버튼**: 우측 하단 빨간색 플로팅 버튼
+- ⏱️ **3초 자동 카운트다운**: 119 자동 연결
+- 📞 **원터치 긴급 연락**: 119 및 등록된 가족에게 즉시 연락
+- 📍 **GPS 위치 전송**: 자동으로 현재 위치를 SMS로 공유
+- 🎨 **라이브 데모 센터**: 홈 화면에서 모든 기능을 한눈에 확인
 - 🚀 **배포 링크 공유**: 원클릭으로 URL 복사 및 새 창 열기
-- 🎨 **기능별 시연 카드**: 6개 주요 기능을 카드 형식으로 시각화
-- 📊 **기술 스택 표시**: Backend, Frontend, Voice, AI 기술 아이콘화
 
 ### **📱 사용 방법**
 - **스마트폰으로 접속**: 위 링크를 모바일 브라우저에서 열기
@@ -400,13 +414,14 @@ Cloudflare R2
 3. **식품업계 제휴** - 쫀드기, 추억의 과자 브랜드
 4. **마케팅 메시지** - "인생이 쫀득해진다" 캠페인
 
-**데모 URL**: https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai
+**데모 URL**: https://5175-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai
 
 **지금 접속해서 완성된 ZZonde MVP를 경험해보세요!** 🚀
 
-### 🎉 Phase 2 완성 기념!
-모든 핵심 기능이 구현되었습니다:
+### 🎉 Phase 2+ 완성 기념!
+모든 핵심 기능 + 긴급 안전 시스템이 구현되었습니다:
 - ✅ AI 동반자 '존디' (메모리, 안전 감시, 능동적 대화)
+- ✅ **긴급 SOS 시스템 (NEW!)** 🚨
 - ✅ 날씨 페이지 (OpenWeather API)
 - ✅ 건강 관리 (복약 알림)
 - ✅ 뉴스 (6개 카테고리)
@@ -415,6 +430,36 @@ Cloudflare R2
 - ✅ 라이브 데모 센터
 
 **GitHub Pull Request**: https://github.com/dewytea/mySeniorProjectGens/pull/1
+
+---
+
+## 🆘 긴급 SOS 시스템 사용법
+
+### 1. SOS 버튼 위치
+- **우측 하단** 빨간색 플로팅 버튼
+- 모든 페이지에서 접근 가능
+- Pulse 애니메이션으로 쉽게 발견
+
+### 2. 긴급 상황 발생 시
+1. **SOS 버튼 클릭** → 3초 카운트다운 시작
+2. **자동 연결** → 119 긴급 전화 자동 연결
+3. **위치 전송** → GPS 위치 정보 자동 전송
+4. **가족 알림** → 등록된 가족에게 SMS 발송
+
+### 3. 실수로 눌렀을 때
+- **취소 버튼** 클릭 → 즉시 카운트다운 중지
+- 음성 안내: "긴급 호출이 취소되었습니다"
+
+### 4. 비상 연락처 관리
+- **설정 페이지** 접속
+- **긴급 SOS 연락처** 섹션에서 관리
+- 가족/지인 연락처 추가/수정/삭제
+
+### 5. 전송되는 정보
+- 📍 GPS 위치 (위도/경도)
+- 📱 Google Maps 링크
+- ⏰ 발생 시각
+- 👤 사용자 정보
 
 ---
 
