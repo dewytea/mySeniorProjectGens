@@ -498,6 +498,7 @@ app.get('/', (c) => {
 
       {/* JavaScript */}
       <script src="/static/app.js"></script>
+      <script src="/static/emergency_sos.js"></script>
     </div>
   )
 })
@@ -1667,6 +1668,54 @@ app.get('/settings', (c) => {
             </div>
           </div>
 
+          {/* 긴급 SOS 연락처 섹션 */}
+          <div class="bg-gradient-to-r from-red-50 to-pink-50 rounded-2xl shadow-lg p-6 border-2 border-red-300">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+              <i class="fas fa-exclamation-triangle text-red-600 mr-3"></i>
+              🚨 긴급 SOS 연락처
+            </h2>
+            <div class="space-y-4">
+              <div class="bg-white rounded-xl p-5 border-2 border-red-200">
+                <p class="text-lg font-semibold text-gray-800 mb-3">
+                  <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+                  위급 상황 시 자동으로 연락할 가족/지인을 등록하세요
+                </p>
+                <div class="space-y-3" id="emergencyContactsList">
+                  {/* Will be filled by JavaScript */}
+                </div>
+                <button 
+                  onclick="addEmergencyContact()"
+                  class="w-full mt-4 bg-red-500 text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-red-600 transition-all shadow-lg"
+                >
+                  <i class="fas fa-plus mr-2"></i>비상 연락처 추가
+                </button>
+              </div>
+
+              <div class="bg-yellow-50 rounded-xl p-5 border-2 border-yellow-300">
+                <p class="text-lg font-semibold text-yellow-800 mb-2 flex items-center">
+                  <i class="fas fa-lightbulb text-yellow-600 mr-2"></i>
+                  SOS 버튼 사용법
+                </p>
+                <ul class="space-y-2 text-base text-gray-700">
+                  <li><i class="fas fa-check text-green-600 mr-2"></i>우측 하단 빨간색 SOS 버튼을 눌러주세요</li>
+                  <li><i class="fas fa-check text-green-600 mr-2"></i>3초 카운트다운 후 자동으로 119에 연결됩니다</li>
+                  <li><i class="fas fa-check text-green-600 mr-2"></i>등록된 가족에게도 위치 정보가 전송됩니다</li>
+                  <li><i class="fas fa-check text-green-600 mr-2"></i>실수로 눌렀다면 취소 버튼을 눌러주세요</li>
+                </ul>
+              </div>
+
+              <div class="bg-blue-50 rounded-xl p-5 border-2 border-blue-200">
+                <button 
+                  onclick="emergencySOSSystem.activateSOS()"
+                  class="w-full bg-red-600 text-white px-8 py-5 rounded-full font-black text-2xl hover:bg-red-700 transition-all shadow-xl flex items-center justify-center space-x-3"
+                >
+                  <i class="fas fa-exclamation-triangle text-3xl"></i>
+                  <span>SOS 테스트해보기</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
           {/* 나의 마실 범위 섹션 */}
           <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl shadow-lg p-6 border-2 border-green-200">
             <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
@@ -1860,6 +1909,8 @@ app.get('/settings', (c) => {
       
       <script src="/static/app.js"></script>
       <script src="/static/auth.js"></script>
+      <script src="/static/emergency_sos.js"></script>
+      <script src="/static/emergency_contacts.js"></script>
     </div>
   )
 })
