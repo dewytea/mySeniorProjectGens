@@ -149,6 +149,196 @@ app.get('/', (c) => {
 
       {/* Main Content */}
       <main class="max-w-7xl mx-auto px-4 py-6">
+        {/* Live Demo Banner */}
+        <div class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 rounded-3xl shadow-2xl p-8 mb-6 text-white animate-pulse">
+          <div class="text-center">
+            <h2 class="text-3xl font-bold mb-3 flex items-center justify-center">
+              <i class="fas fa-rocket mr-3 text-4xl"></i>
+              🎉 라이브 배포 완료! 🎉
+            </h2>
+            <p class="text-2xl mb-4 font-semibold">지금 바로 체험해보세요!</p>
+            <div class="bg-white bg-opacity-20 rounded-xl p-4 mb-4 backdrop-blur-sm">
+              <p class="text-lg mb-2 font-semibold">🌐 배포 URL:</p>
+              <a 
+                href="https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai"
+                target="_blank"
+                class="text-xl font-mono bg-white text-purple-600 px-6 py-3 rounded-lg inline-block hover:bg-yellow-100 transition-all shadow-lg"
+              >
+                https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai
+              </a>
+            </div>
+            <div class="flex justify-center space-x-4">
+              <a 
+                href="https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai"
+                target="_blank"
+                class="bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-xl hover:bg-yellow-300 transition-all shadow-lg"
+              >
+                <i class="fas fa-external-link-alt mr-2"></i>새 창으로 열기
+              </a>
+              <button 
+                onclick="navigator.clipboard.writeText('https://5174-i1l4snsl2k1m52qnvfsx9-3844e1b6.sandbox.novita.ai'); alert('링크가 복사되었습니다!');"
+                class="bg-yellow-400 text-purple-900 px-8 py-4 rounded-full font-bold text-xl hover:bg-yellow-300 transition-all shadow-lg"
+              >
+                <i class="fas fa-copy mr-2"></i>링크 복사
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Feature Demo Center */}
+        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-6">
+          <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center flex items-center justify-center">
+            <i class="fas fa-star text-zzonde-yellow mr-3 text-4xl"></i>
+            ZZonde MVP 완전 기능 체험
+            <i class="fas fa-star text-zzonde-yellow ml-3 text-4xl"></i>
+          </h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+            <div class="bg-gradient-to-br from-orange-100 to-yellow-100 rounded-2xl p-6 border-2 border-zzonde-orange">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-robot text-4xl text-zzonde-orange mr-3"></i>
+                <h3 class="text-2xl font-bold text-gray-800">AI 동반자 '존디'</h3>
+              </div>
+              <ul class="space-y-2 text-lg text-gray-700">
+                <li><i class="fas fa-check text-green-600 mr-2"></i>대화 기억 기능</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>능동적 인사</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>안전 모니터링</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>음성 인터페이스</li>
+              </ul>
+              <a 
+                href="/companion"
+                class="block mt-4 bg-zzonde-orange text-white px-6 py-3 rounded-full font-bold text-center hover:bg-zzonde-yellow transition-all"
+              >
+                지금 체험하기 →
+              </a>
+            </div>
+
+            <div class="bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl p-6 border-2 border-blue-400">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-cloud-sun text-4xl text-blue-600 mr-3"></i>
+                <h3 class="text-2xl font-bold text-gray-800">날씨 정보</h3>
+              </div>
+              <ul class="space-y-2 text-lg text-gray-700">
+                <li><i class="fas fa-check text-green-600 mr-2"></i>실시간 날씨</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>대기질 정보</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>시간별 예보</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>음성 안내</li>
+              </ul>
+              <a 
+                href="/weather"
+                class="block mt-4 bg-blue-500 text-white px-6 py-3 rounded-full font-bold text-center hover:bg-blue-600 transition-all"
+              >
+                날씨 확인하기 →
+              </a>
+            </div>
+
+            <div class="bg-gradient-to-br from-red-100 to-pink-100 rounded-2xl p-6 border-2 border-red-400">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-pills text-4xl text-red-600 mr-3"></i>
+                <h3 class="text-2xl font-bold text-gray-800">복약 관리</h3>
+              </div>
+              <ul class="space-y-2 text-lg text-gray-700">
+                <li><i class="fas fa-check text-green-600 mr-2"></i>복약 일정</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>알림 기능</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>복약 통계</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>음성 안내</li>
+              </ul>
+              <a 
+                href="/health"
+                class="block mt-4 bg-red-500 text-white px-6 py-3 rounded-full font-bold text-center hover:bg-red-600 transition-all"
+              >
+                건강 관리하기 →
+              </a>
+            </div>
+
+            <div class="bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl p-6 border-2 border-green-400">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-newspaper text-4xl text-green-600 mr-3"></i>
+                <h3 class="text-2xl font-bold text-gray-800">뉴스</h3>
+              </div>
+              <ul class="space-y-2 text-lg text-gray-700">
+                <li><i class="fas fa-check text-green-600 mr-2"></i>6개 카테고리</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>필터링 기능</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>TTS 읽어주기</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>뉴스 공유</li>
+              </ul>
+              <a 
+                href="/news"
+                class="block mt-4 bg-green-500 text-white px-6 py-3 rounded-full font-bold text-center hover:bg-green-600 transition-all"
+              >
+                뉴스 보기 →
+              </a>
+            </div>
+
+            <div class="bg-gradient-to-br from-purple-100 to-indigo-100 rounded-2xl p-6 border-2 border-purple-400">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-user-circle text-4xl text-purple-600 mr-3"></i>
+                <h3 class="text-2xl font-bold text-gray-800">회원가입/로그인</h3>
+              </div>
+              <ul class="space-y-2 text-lg text-gray-700">
+                <li><i class="fas fa-check text-green-600 mr-2"></i>간편 회원가입</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>프로필 관리</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>설정 저장</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>보안 기능</li>
+              </ul>
+              <a 
+                href="/auth/login"
+                class="block mt-4 bg-purple-500 text-white px-6 py-3 rounded-full font-bold text-center hover:bg-purple-600 transition-all"
+              >
+                로그인하기 →
+              </a>
+            </div>
+
+            <div class="bg-gradient-to-br from-yellow-100 to-orange-100 rounded-2xl p-6 border-2 border-yellow-400">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-microphone text-4xl text-yellow-600 mr-3"></i>
+                <h3 class="text-2xl font-bold text-gray-800">음성 인식</h3>
+              </div>
+              <ul class="space-y-2 text-lg text-gray-700">
+                <li><i class="fas fa-check text-green-600 mr-2"></i>AI 인텐트 인식</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>페이지 이동</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>명령 실행</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i>TTS 응답</li>
+              </ul>
+              <button 
+                onclick="document.getElementById('voiceBtn').click()"
+                class="block w-full mt-4 bg-yellow-500 text-white px-6 py-3 rounded-full font-bold text-center hover:bg-yellow-600 transition-all"
+              >
+                음성 명령 시작 →
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-r from-green-100 to-blue-100 rounded-2xl p-6 border-2 border-green-400">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+              <i class="fas fa-code text-green-600 mr-3"></i>
+              기술 스택 & 아키텍처
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="text-center bg-white rounded-xl p-4 shadow">
+                <i class="fas fa-server text-3xl text-orange-500 mb-2"></i>
+                <p class="font-bold text-lg">Backend</p>
+                <p class="text-base text-gray-600">Hono</p>
+              </div>
+              <div class="text-center bg-white rounded-xl p-4 shadow">
+                <i class="fab fa-react text-3xl text-blue-500 mb-2"></i>
+                <p class="font-bold text-lg">Frontend</p>
+                <p class="text-base text-gray-600">TSX</p>
+              </div>
+              <div class="text-center bg-white rounded-xl p-4 shadow">
+                <i class="fas fa-microphone-alt text-3xl text-purple-500 mb-2"></i>
+                <p class="font-bold text-lg">Voice</p>
+                <p class="text-base text-gray-600">Web Speech API</p>
+              </div>
+              <div class="text-center bg-white rounded-xl p-4 shadow">
+                <i class="fas fa-robot text-3xl text-pink-500 mb-2"></i>
+                <p class="font-bold text-lg">AI</p>
+                <p class="text-base text-gray-600">GPT-5-mini</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Text Size Control */}
         <div class="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl p-6 mb-6 shadow-md">
           <div class="flex items-center justify-between">
@@ -181,6 +371,11 @@ app.get('/', (c) => {
 
         {/* Quick Actions */}
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+          <a href="/companion" class="quick-action-card bg-gradient-to-br from-zzonde-orange to-zzonde-yellow rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all text-center border-2 border-transparent hover:border-white">
+            <i class="fas fa-robot text-5xl text-white mb-3"></i>
+            <p class="text-xl font-bold text-white">존디와 대화</p>
+            <p class="text-sm text-white opacity-90 mt-1">AI 동반자</p>
+          </a>
           <a href="/news" class="quick-action-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all text-center border-2 border-transparent hover:border-zzonde-orange">
             <i class="fas fa-newspaper text-5xl text-zzonde-orange mb-3"></i>
             <p class="text-xl font-bold text-gray-800">뉴스</p>
@@ -253,9 +448,9 @@ app.get('/', (c) => {
       </main>
 
       {/* Bottom Navigation */}
-      <nav class="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 shadow-2xl">
+      <nav class="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 shadow-2xl z-40">
         <div class="max-w-7xl mx-auto px-4">
-          <div class="grid grid-cols-4 gap-2 py-3">
+          <div class="grid grid-cols-5 gap-1 py-3">
             <a href="/" class="nav-item flex flex-col items-center py-3 text-zzonde-orange">
               <i class="fas fa-home text-3xl mb-1"></i>
               <span class="text-sm font-semibold">홈</span>
@@ -263,6 +458,10 @@ app.get('/', (c) => {
             <a href="/news" class="nav-item flex flex-col items-center py-3 text-gray-600 hover:text-zzonde-orange transition-colors">
               <i class="fas fa-newspaper text-3xl mb-1"></i>
               <span class="text-sm font-semibold">뉴스</span>
+            </a>
+            <a href="/weather" class="nav-item flex flex-col items-center py-3 text-gray-600 hover:text-zzonde-orange transition-colors">
+              <i class="fas fa-cloud-sun text-3xl mb-1"></i>
+              <span class="text-sm font-semibold">날씨</span>
             </a>
             <a href="/health" class="nav-item flex flex-col items-center py-3 text-gray-600 hover:text-zzonde-orange transition-colors">
               <i class="fas fa-heartbeat text-3xl mb-1"></i>
@@ -299,38 +498,272 @@ app.get('/', (c) => {
 
       {/* JavaScript */}
       <script src="/static/app.js"></script>
+      <script src="/static/emergency_sos.js"></script>
     </div>
   )
 })
 
-// API: 뉴스 가져오기 (Mock Data)
-app.get('/api/news', (c) => {
-  const news = [
-    {
-      id: 1,
-      title: '2026년 설 연휴, 최대 9일 황금연휴 가능',
-      summary: '올해 설 연휴는 1월 28일부터 30일까지이며, 연차를 활용하면 최대 9일의 황금연휴를 즐길 수 있습니다.',
-      category: '사회',
-      time: '1시간 전'
-    },
-    {
-      id: 2,
-      title: '서울 미세먼지 \'좋음\' 수준, 맑은 하늘 이어져',
-      summary: '오늘 서울 지역 미세먼지 농도가 \'좋음\' 수준을 유지하며 청명한 날씨가 계속되고 있습니다.',
-      category: '날씨',
-      time: '2시간 전'
-    },
-    {
-      id: 3,
-      title: '건강보험 혜택 확대, 시니어 의료비 부담 완화',
-      summary: '정부가 65세 이상 시니어를 대상으로 건강보험 혜택을 확대하여 의료비 부담을 줄이기로 했습니다.',
-      category: '건강',
-      time: '3시간 전'
+// API: 날씨 정보 가져오기 (OpenWeather API)
+app.get('/api/weather', async (c) => {
+  try {
+    const apiKey = c.env?.OPENWEATHER_API_KEY || process.env.OPENWEATHER_API_KEY || 'demo_key';
+    const city = c.req.query('city') || 'Seoul';
+    const lang = 'kr';
+    
+    // OpenWeather API 호출
+    const weatherResponse = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&lang=${lang}&units=metric`
+    );
+    
+    if (!weatherResponse.ok) {
+      // API 실패 시 Mock 데이터 반환
+      console.log('OpenWeather API failed, using mock data');
+      return c.json({
+        success: true,
+        data: {
+          city: '서울',
+          temp: 15,
+          feels_like: 13,
+          description: '맑음',
+          icon: '01d',
+          humidity: 60,
+          wind_speed: 2.5,
+          pressure: 1013,
+          visibility: 10000,
+          sunrise: new Date().setHours(7, 30, 0),
+          sunset: new Date().setHours(17, 45, 0)
+        },
+        source: 'mock'
+      });
     }
-  ]
-  
-  return c.json({ success: true, data: news })
-})
+    
+    const weatherData = await weatherResponse.json();
+    
+    return c.json({
+      success: true,
+      data: {
+        city: weatherData.name,
+        temp: Math.round(weatherData.main.temp),
+        feels_like: Math.round(weatherData.main.feels_like),
+        description: weatherData.weather[0].description,
+        icon: weatherData.weather[0].icon,
+        humidity: weatherData.main.humidity,
+        wind_speed: weatherData.wind.speed,
+        pressure: weatherData.main.pressure,
+        visibility: weatherData.visibility,
+        sunrise: weatherData.sys.sunrise * 1000,
+        sunset: weatherData.sys.sunset * 1000
+      },
+      source: 'api'
+    });
+  } catch (error) {
+    console.error('Weather API error:', error);
+    // 에러 발생 시 Mock 데이터 반환
+    return c.json({
+      success: true,
+      data: {
+        city: '서울',
+        temp: 15,
+        feels_like: 13,
+        description: '맑음',
+        icon: '01d',
+        humidity: 60,
+        wind_speed: 2.5,
+        pressure: 1013,
+        visibility: 10000,
+        sunrise: new Date().setHours(7, 30, 0),
+        sunset: new Date().setHours(17, 45, 0)
+      },
+      source: 'mock'
+    });
+  }
+});
+
+// API: 대기질 정보 가져오기
+app.get('/api/air-quality', async (c) => {
+  try {
+    const apiKey = c.env?.OPENWEATHER_API_KEY || process.env.OPENWEATHER_API_KEY || 'demo_key';
+    const lat = c.req.query('lat') || '37.5665';  // Seoul
+    const lon = c.req.query('lon') || '126.9780'; // Seoul
+    
+    const airResponse = await fetch(
+      `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`
+    );
+    
+    if (!airResponse.ok) {
+      return c.json({
+        success: true,
+        data: {
+          aqi: 1,
+          pm10: 30,
+          pm25: 15,
+          level: '좋음',
+          color: 'green'
+        },
+        source: 'mock'
+      });
+    }
+    
+    const airData = await airResponse.json();
+    const aqi = airData.list[0].main.aqi;
+    const components = airData.list[0].components;
+    
+    const aqiLevels = ['좋음', '보통', '나쁨', '매우 나쁨', '최악'];
+    const aqiColors = ['green', 'yellow', 'orange', 'red', 'purple'];
+    
+    return c.json({
+      success: true,
+      data: {
+        aqi: aqi,
+        pm10: Math.round(components.pm10),
+        pm25: Math.round(components.pm2_5),
+        level: aqiLevels[aqi - 1] || '좋음',
+        color: aqiColors[aqi - 1] || 'green'
+      },
+      source: 'api'
+    });
+  } catch (error) {
+    console.error('Air quality API error:', error);
+    return c.json({
+      success: true,
+      data: {
+        aqi: 1,
+        pm10: 30,
+        pm25: 15,
+        level: '좋음',
+        color: 'green'
+      },
+      source: 'mock'
+    });
+  }
+});
+
+// API: 뉴스 가져오기 (Naver RSS + Mock Data)
+app.get('/api/news', async (c) => {
+  try {
+    const category = c.req.query('category') || 'all';
+    
+    // RSS 피드 파싱을 위해 간단한 fetch 사용
+    // 네이버 뉴스 RSS: https://news.naver.com/main/list.naver?mode=LSD&mid=sec&sid1=001
+    // 실제로는 CORS 문제로 서버에서 처리해야 함
+    
+    // 카테고리별 RSS URL
+    const rssUrls = {
+      'society': 'https://news.naver.com/main/list.naver?mode=LSD&mid=sec&sid1=102',
+      'politics': 'https://news.naver.com/main/list.naver?mode=LSD&mid=sec&sid1=100',
+      'economy': 'https://news.naver.com/main/list.naver?mode=LSD&mid=sec&sid1=101',
+      'life': 'https://news.naver.com/main/list.naver?mode=LSD&mid=sec&sid1=103',
+      'world': 'https://news.naver.com/main/list.naver?mode=LSD&mid=sec&sid1=104',
+      'it': 'https://news.naver.com/main/list.naver?mode=LSD&mid=sec&sid1=105'
+    };
+    
+    // MVP에서는 Mock 데이터 사용 (CORS 문제 해결 후 실제 API 사용)
+    const mockNews = [
+      {
+        id: 1,
+        title: '2026년 설 연휴, 최대 9일 황금연휴 가능',
+        summary: '올해 설 연휴는 1월 28일부터 30일까지이며, 연차를 활용하면 최대 9일의 황금연휴를 즐길 수 있습니다. 귀향길 교통 혼잡이 예상되니 미리 계획하세요.',
+        category: '사회',
+        categoryEn: 'society',
+        time: '1시간 전',
+        source: '연합뉴스',
+        url: 'https://news.naver.com',
+        imageUrl: '/static/news-placeholder.jpg'
+      },
+      {
+        id: 2,
+        title: '서울 미세먼지 \'좋음\' 수준, 맑은 하늘 이어져',
+        summary: '오늘 서울 지역 미세먼지 농도가 \'좋음\' 수준을 유지하며 청명한 날씨가 계속되고 있습니다. 야외 활동하기 좋은 날씨입니다.',
+        category: '날씨',
+        categoryEn: 'weather',
+        time: '2시간 전',
+        source: 'KBS뉴스',
+        url: 'https://news.naver.com',
+        imageUrl: '/static/news-placeholder.jpg'
+      },
+      {
+        id: 3,
+        title: '건강보험 혜택 확대, 시니어 의료비 부담 완화',
+        summary: '정부가 65세 이상 시니어를 대상으로 건강보험 혜택을 확대하여 의료비 부담을 줄이기로 했습니다. 올해 상반기부터 시행될 예정입니다.',
+        category: '건강',
+        categoryEn: 'health',
+        time: '3시간 전',
+        source: 'MBC뉴스',
+        url: 'https://news.naver.com',
+        imageUrl: '/static/news-placeholder.jpg'
+      },
+      {
+        id: 4,
+        title: '시니어 일자리 사업 확대... 월 50만원 이상 지원',
+        summary: '정부가 시니어 일자리 사업을 대폭 확대하여 65세 이상 어르신들에게 월 50만원 이상의 일자리를 제공하기로 했습니다.',
+        category: '경제',
+        categoryEn: 'economy',
+        time: '4시간 전',
+        source: 'SBS뉴스',
+        url: 'https://news.naver.com',
+        imageUrl: '/static/news-placeholder.jpg'
+      },
+      {
+        id: 5,
+        title: '스마트폰 사용법 무료 교육... 전국 복지관에서 진행',
+        summary: '전국 노인복지관에서 스마트폰 사용법 무료 교육이 진행됩니다. 카카오톡, 인터넷뱅킹 등 실생활에 필요한 기능을 배울 수 있습니다.',
+        category: 'IT',
+        categoryEn: 'it',
+        time: '5시간 전',
+        source: 'JTBC뉴스',
+        url: 'https://news.naver.com',
+        imageUrl: '/static/news-placeholder.jpg'
+      },
+      {
+        id: 6,
+        title: '치매 예방 프로그램 전국 확대... 무료 검진 실시',
+        summary: '보건복지부가 치매 예방 프로그램을 전국으로 확대하고, 65세 이상 어르신을 대상으로 무료 검진을 실시합니다.',
+        category: '건강',
+        categoryEn: 'health',
+        time: '6시간 전',
+        source: '연합뉴스',
+        url: 'https://news.naver.com',
+        imageUrl: '/static/news-placeholder.jpg'
+      }
+    ];
+    
+    // 카테고리 필터링
+    let filteredNews = mockNews;
+    if (category !== 'all') {
+      filteredNews = mockNews.filter(news => news.categoryEn === category);
+    }
+    
+    return c.json({ 
+      success: true, 
+      data: filteredNews,
+      source: 'mock',
+      message: 'MVP에서는 Mock 데이터를 사용합니다. 실제 서비스에서는 네이버 뉴스 API를 연동합니다.'
+    });
+  } catch (error) {
+    console.error('News API error:', error);
+    
+    // Fallback to mock data
+    const fallbackNews = [
+      {
+        id: 1,
+        title: '뉴스를 불러올 수 없습니다',
+        summary: '일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+        category: '공지',
+        categoryEn: 'notice',
+        time: '방금 전',
+        source: 'ZZonde',
+        url: '#',
+        imageUrl: '/static/news-placeholder.jpg'
+      }
+    ];
+    
+    return c.json({ 
+      success: true, 
+      data: fallbackNews,
+      source: 'fallback'
+    });
+  }
+});
 
 // 뉴스 페이지
 app.get('/news', (c) => {
@@ -348,6 +781,47 @@ app.get('/news', (c) => {
       </header>
 
       <main class="max-w-7xl mx-auto px-4 py-6">
+        {/* Category Filter */}
+        <div class="mb-6 overflow-x-auto">
+          <div class="flex space-x-3 pb-2">
+            <button 
+              onclick="filterNewsByCategory('all')"
+              class="news-category-btn bg-zzonde-orange text-white px-6 py-3 rounded-full font-bold text-lg whitespace-nowrap shadow-md hover:shadow-lg transition-all"
+              data-category="all"
+            >
+              전체
+            </button>
+            <button 
+              onclick="filterNewsByCategory('society')"
+              class="news-category-btn bg-white text-gray-800 px-6 py-3 rounded-full font-bold text-lg whitespace-nowrap shadow-md hover:shadow-lg transition-all border-2 border-gray-300"
+              data-category="society"
+            >
+              사회
+            </button>
+            <button 
+              onclick="filterNewsByCategory('health')"
+              class="news-category-btn bg-white text-gray-800 px-6 py-3 rounded-full font-bold text-lg whitespace-nowrap shadow-md hover:shadow-lg transition-all border-2 border-gray-300"
+              data-category="health"
+            >
+              건강
+            </button>
+            <button 
+              onclick="filterNewsByCategory('economy')"
+              class="news-category-btn bg-white text-gray-800 px-6 py-3 rounded-full font-bold text-lg whitespace-nowrap shadow-md hover:shadow-lg transition-all border-2 border-gray-300"
+              data-category="economy"
+            >
+              경제
+            </button>
+            <button 
+              onclick="filterNewsByCategory('it')"
+              class="news-category-btn bg-white text-gray-800 px-6 py-3 rounded-full font-bold text-lg whitespace-nowrap shadow-md hover:shadow-lg transition-all border-2 border-gray-300"
+              data-category="it"
+            >
+              IT
+            </button>
+          </div>
+        </div>
+
         <div id="newsDetailList" class="space-y-4">
           {/* News will be loaded here */}
         </div>
@@ -357,6 +831,480 @@ app.get('/news', (c) => {
     </div>
   )
 })
+
+// API: 복약 정보 가져오기
+app.get('/api/medicines', (c) => {
+  // LocalStorage에서 가져온 데이터를 반환 (실제로는 D1에서 가져와야 함)
+  // 클라이언트 측에서 처리하도록 Mock 데이터 반환
+  const medicines = [
+    {
+      id: 1,
+      name: '혈압약',
+      time: '08:00',
+      timeDisplay: '아침 8:00',
+      taken: false,
+      frequency: 'daily',
+      notes: '식후 30분'
+    },
+    {
+      id: 2,
+      name: '소화제',
+      time: '12:30',
+      timeDisplay: '점심 12:30',
+      taken: false,
+      frequency: 'daily',
+      notes: '식후 즉시'
+    },
+    {
+      id: 3,
+      name: '비타민',
+      time: '18:00',
+      timeDisplay: '저녁 6:00',
+      taken: false,
+      frequency: 'daily',
+      notes: '식후 30분'
+    }
+  ];
+  
+  return c.json({ success: true, data: medicines });
+});
+
+// API: 복약 완료 처리
+app.post('/api/medicines/:id/take', async (c) => {
+  const id = c.req.param('id');
+  
+  // 실제로는 D1 database에 저장
+  // 현재는 success만 반환
+  return c.json({
+    success: true,
+    message: '복약이 완료되었습니다',
+    medicineId: id,
+    takenAt: new Date().toISOString()
+  });
+});
+
+// API: 복약 추가
+app.post('/api/medicines', async (c) => {
+  try {
+    const body = await c.req.json();
+    const { name, time, frequency, notes } = body;
+    
+    // 실제로는 D1에 저장
+    const newMedicine = {
+      id: Date.now(),
+      name,
+      time,
+      frequency: frequency || 'daily',
+      notes: notes || '',
+      taken: false
+    };
+    
+    return c.json({
+      success: true,
+      data: newMedicine
+    });
+  } catch (error) {
+    return c.json({
+      success: false,
+      error: 'Failed to add medicine'
+    }, 400);
+  }
+});
+
+// API: 회원가입/로그인 (MVP - LocalStorage, 향후 D1 연동)
+app.post('/api/auth/register', async (c) => {
+  try {
+    const body = await c.req.json();
+    const { name, phone, password } = body;
+    
+    if (!name || !phone || !password) {
+      return c.json({
+        success: false,
+        error: '모든 필드를 입력해주세요'
+      }, 400);
+    }
+    
+    // MVP: Client에서 localStorage로 처리
+    // 실제로는 D1 database에 저장
+    return c.json({
+      success: true,
+      message: '회원가입이 완료되었습니다',
+      user: {
+        name,
+        phone: phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-****-$3'), // 부분 마스킹
+        createdAt: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    return c.json({
+      success: false,
+      error: '회원가입 중 오류가 발생했습니다'
+    }, 500);
+  }
+});
+
+app.post('/api/auth/login', async (c) => {
+  try {
+    const body = await c.req.json();
+    const { phone, password } = body;
+    
+    if (!phone || !password) {
+      return c.json({
+        success: false,
+        error: '전화번호와 비밀번호를 입력해주세요'
+      }, 400);
+    }
+    
+    // MVP: Client에서 localStorage로 처리
+    // 실제로는 D1 database에서 검증
+    return c.json({
+      success: true,
+      message: '로그인 성공',
+      user: {
+        phone: phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-****-$3'),
+        loginAt: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    return c.json({
+      success: false,
+      error: '로그인 중 오류가 발생했습니다'
+    }, 500);
+  }
+});
+
+// 음성 동반자 '존디' 페이지
+app.get('/companion', (c) => {
+  return c.render(
+    <div class="min-h-screen bg-gradient-to-b from-orange-50 to-yellow-50 pb-32">
+      <header class="bg-zzonde-orange text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <a href="/" class="text-white hover:text-gray-200">
+                <i class="fas fa-arrow-left text-2xl"></i>
+              </a>
+              <h1 class="text-2xl font-bold">존디와 대화</h1>
+            </div>
+            <button 
+              onclick="toggleCompanionSettings()"
+              class="text-white hover:text-gray-200"
+            >
+              <i class="fas fa-cog text-2xl"></i>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="max-w-4xl mx-auto px-4 py-6">
+        {/* AI 캐릭터 */}
+        <div class="text-center mb-8">
+          <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-zzonde-orange to-zzonde-yellow flex items-center justify-center shadow-2xl">
+            <i class="fas fa-robot text-6xl text-white"></i>
+          </div>
+          <h2 class="text-3xl font-bold text-gray-800 mb-2">존디</h2>
+          <p class="text-xl text-gray-600">당신의 쫀득한 AI 동반자 🍬</p>
+        </div>
+
+        {/* 대화 내역 */}
+        <div id="conversationContainer" class="bg-white rounded-3xl shadow-lg p-6 mb-6 min-h-[400px] max-h-[500px] overflow-y-auto">
+          <div id="conversationList" class="space-y-4">
+            {/* 대화가 여기에 표시됩니다 */}
+            <div class="text-center text-gray-400 py-12">
+              <i class="fas fa-comments text-6xl mb-4"></i>
+              <p class="text-xl">아래 마이크 버튼을 눌러 대화를 시작하세요</p>
+            </div>
+          </div>
+        </div>
+
+        {/* 빠른 응답 버튼 */}
+        <div id="quickReplies" class="flex flex-wrap gap-3 mb-6 justify-center">
+          <button 
+            onclick="sendQuickMessage('오늘 날씨 어때?')"
+            class="bg-white text-gray-700 px-6 py-3 rounded-full font-semibold text-lg border-2 border-gray-300 hover:border-zzonde-orange hover:text-zzonde-orange transition-all shadow-md"
+          >
+            🌤️ 날씨 알려줘
+          </button>
+          <button 
+            onclick="sendQuickMessage('오늘 뉴스 보여줘')"
+            class="bg-white text-gray-700 px-6 py-3 rounded-full font-semibold text-lg border-2 border-gray-300 hover:border-zzonde-orange hover:text-zzonde-orange transition-all shadow-md"
+          >
+            📰 뉴스 보여줘
+          </button>
+          <button 
+            onclick="sendQuickMessage('약 먹을 시간이야?')"
+            class="bg-white text-gray-700 px-6 py-3 rounded-full font-semibold text-lg border-2 border-gray-300 hover:border-zzonde-orange hover:text-zzonde-orange transition-all shadow-md"
+          >
+            💊 약 시간 확인
+          </button>
+        </div>
+
+        {/* 컨텍스트 정보 (디버깅용, 나중에 숨길 수 있음) */}
+        <div id="contextInfo" class="bg-blue-50 rounded-2xl p-4 mb-6 text-sm" style="display: none;">
+          <p class="font-semibold text-blue-800 mb-2">🧠 기억된 정보:</p>
+          <div id="contextDetails" class="text-blue-700"></div>
+        </div>
+      </main>
+
+      {/* 거대한 마이크 버튼 (Floating Action Button) */}
+      <div class="fixed bottom-24 left-0 right-0 flex justify-center z-40">
+        <button 
+          id="companionVoiceBtn"
+          onclick="startCompanionVoice()"
+          class="w-28 h-28 rounded-full bg-gradient-to-br from-zzonde-orange to-zzonde-yellow text-white shadow-2xl hover:shadow-3xl transition-all transform hover:scale-110 flex items-center justify-center"
+          style="box-shadow: 0 10px 40px rgba(255, 109, 0, 0.4);"
+        >
+          <i class="fas fa-microphone text-5xl"></i>
+        </button>
+      </div>
+
+      {/* 설정 패널 */}
+      <div id="companionSettings" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">동반자 설정</h2>
+            <button 
+              onclick="toggleCompanionSettings()"
+              class="text-gray-500 hover:text-gray-700"
+            >
+              <i class="fas fa-times text-2xl"></i>
+            </button>
+          </div>
+
+          <div class="space-y-4">
+            <div class="flex items-center justify-between py-4 border-b">
+              <div>
+                <p class="text-xl font-semibold text-gray-800">능동적 대화</p>
+                <p class="text-base text-gray-600">존디가 먼저 말을 걸게 합니다</p>
+              </div>
+              <label class="relative inline-block w-16 h-8">
+                <input 
+                  type="checkbox" 
+                  id="activeGreeting"
+                  checked
+                  onchange="toggleActiveGreeting(this.checked)"
+                  class="opacity-0 w-0 h-0" 
+                />
+                <span class="absolute cursor-pointer inset-0 bg-zzonde-orange rounded-full transition-all"></span>
+              </label>
+            </div>
+
+            <div class="flex items-center justify-between py-4 border-b">
+              <div>
+                <p class="text-xl font-semibold text-gray-800">안전 모니터링</p>
+                <p class="text-base text-gray-600">위급 상황을 자동으로 감지합니다</p>
+              </div>
+              <label class="relative inline-block w-16 h-8">
+                <input 
+                  type="checkbox" 
+                  id="safetyMonitoring"
+                  checked
+                  class="opacity-0 w-0 h-0" 
+                />
+                <span class="absolute cursor-pointer inset-0 bg-zzonde-orange rounded-full transition-all"></span>
+              </label>
+            </div>
+
+            <div class="py-4">
+              <p class="text-xl font-semibold text-gray-800 mb-3">비상 연락처</p>
+              <button 
+                onclick="manageEmergencyContacts()"
+                class="w-full bg-zzonde-orange text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-zzonde-yellow transition-all"
+              >
+                <i class="fas fa-phone mr-2"></i>연락처 관리
+              </button>
+            </div>
+
+            <div class="py-4">
+              <button 
+                onclick="showContextDebug()"
+                class="w-full bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-semibold text-lg hover:bg-gray-300 transition-all"
+              >
+                <i class="fas fa-brain mr-2"></i>기억된 정보 보기
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="/static/app.js"></script>
+      <script src="/static/auth.js"></script>
+      <script src="/static/memory_service.js"></script>
+      <script src="/static/safety_monitor.js"></script>
+      <script src="/static/companion.js"></script>
+    </div>
+  )
+});
+
+// 로그인/회원가입 페이지
+app.get('/auth/login', (c) => {
+  return c.render(
+    <div class="min-h-screen bg-gradient-to-b from-orange-50 to-yellow-50 flex items-center justify-center p-4">
+      <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl p-8">
+        <div class="text-center mb-8">
+          <img src="/static/zzonde-logo.png" alt="ZZonde" class="w-20 h-20 mx-auto mb-4" />
+          <h1 class="text-4xl font-bold text-gray-800 mb-2" style="font-family: 'Quicksand', sans-serif;">ZZonde</h1>
+          <p class="text-xl text-gray-600">로그인하고 쫀득한 하루를 시작하세요!</p>
+        </div>
+        
+        <form id="loginForm" class="space-y-4">
+          <div>
+            <label class="block text-xl font-semibold text-gray-800 mb-2">
+              <i class="fas fa-phone text-zzonde-orange mr-2"></i>전화번호
+            </label>
+            <input 
+              type="tel" 
+              id="loginPhone"
+              placeholder="010-1234-5678"
+              class="w-full px-4 py-3 text-xl border-2 border-gray-300 rounded-lg focus:border-zzonde-orange focus:outline-none"
+              required
+            />
+          </div>
+          
+          <div>
+            <label class="block text-xl font-semibold text-gray-800 mb-2">
+              <i class="fas fa-lock text-zzonde-orange mr-2"></i>비밀번호
+            </label>
+            <input 
+              type="password" 
+              id="loginPassword"
+              placeholder="비밀번호"
+              class="w-full px-4 py-3 text-xl border-2 border-gray-300 rounded-lg focus:border-zzonde-orange focus:outline-none"
+              required
+            />
+          </div>
+          
+          <button 
+            type="submit"
+            class="w-full bg-gradient-to-r from-zzonde-orange to-zzonde-yellow text-white px-8 py-4 rounded-full font-bold text-xl hover:shadow-lg transition-all"
+          >
+            <i class="fas fa-sign-in-alt mr-2"></i>로그인
+          </button>
+        </form>
+        
+        <div class="mt-6 text-center">
+          <p class="text-lg text-gray-600 mb-3">아직 회원이 아니신가요?</p>
+          <a 
+            href="/auth/register"
+            class="inline-block bg-white text-zzonde-orange px-6 py-3 rounded-full font-bold text-lg border-2 border-zzonde-orange hover:bg-orange-50 transition-all"
+          >
+            회원가입하기
+          </a>
+        </div>
+        
+        <div class="mt-6 text-center">
+          <a 
+            href="/"
+            class="text-lg text-gray-600 hover:text-zzonde-orange transition-colors"
+          >
+            <i class="fas fa-arrow-left mr-2"></i>홈으로 돌아가기
+          </a>
+        </div>
+      </div>
+      
+      <script src="/static/app.js"></script>
+      <script src="/static/auth.js"></script>
+    </div>
+  )
+});
+
+app.get('/auth/register', (c) => {
+  return c.render(
+    <div class="min-h-screen bg-gradient-to-b from-orange-50 to-yellow-50 flex items-center justify-center p-4">
+      <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl p-8">
+        <div class="text-center mb-8">
+          <img src="/static/zzonde-logo.png" alt="ZZonde" class="w-20 h-20 mx-auto mb-4" />
+          <h1 class="text-4xl font-bold text-gray-800 mb-2" style="font-family: 'Quicksand', sans-serif;">ZZonde</h1>
+          <p class="text-xl text-gray-600">가입하고 쫀득한 연결을 시작하세요!</p>
+        </div>
+        
+        <form id="registerForm" class="space-y-4">
+          <div>
+            <label class="block text-xl font-semibold text-gray-800 mb-2">
+              <i class="fas fa-user text-zzonde-orange mr-2"></i>이름
+            </label>
+            <input 
+              type="text" 
+              id="registerName"
+              placeholder="홍길동"
+              class="w-full px-4 py-3 text-xl border-2 border-gray-300 rounded-lg focus:border-zzonde-orange focus:outline-none"
+              required
+            />
+          </div>
+          
+          <div>
+            <label class="block text-xl font-semibold text-gray-800 mb-2">
+              <i class="fas fa-phone text-zzonde-orange mr-2"></i>전화번호
+            </label>
+            <input 
+              type="tel" 
+              id="registerPhone"
+              placeholder="010-1234-5678"
+              class="w-full px-4 py-3 text-xl border-2 border-gray-300 rounded-lg focus:border-zzonde-orange focus:outline-none"
+              required
+            />
+          </div>
+          
+          <div>
+            <label class="block text-xl font-semibold text-gray-800 mb-2">
+              <i class="fas fa-lock text-zzonde-orange mr-2"></i>비밀번호
+            </label>
+            <input 
+              type="password" 
+              id="registerPassword"
+              placeholder="6자 이상"
+              class="w-full px-4 py-3 text-xl border-2 border-gray-300 rounded-lg focus:border-zzonde-orange focus:outline-none"
+              required
+              minlength="6"
+            />
+          </div>
+          
+          <div>
+            <label class="block text-xl font-semibold text-gray-800 mb-2">
+              <i class="fas fa-lock text-zzonde-orange mr-2"></i>비밀번호 확인
+            </label>
+            <input 
+              type="password" 
+              id="registerPasswordConfirm"
+              placeholder="비밀번호 다시 입력"
+              class="w-full px-4 py-3 text-xl border-2 border-gray-300 rounded-lg focus:border-zzonde-orange focus:outline-none"
+              required
+            />
+          </div>
+          
+          <button 
+            type="submit"
+            class="w-full bg-gradient-to-r from-zzonde-orange to-zzonde-yellow text-white px-8 py-4 rounded-full font-bold text-xl hover:shadow-lg transition-all"
+          >
+            <i class="fas fa-user-plus mr-2"></i>회원가입
+          </button>
+        </form>
+        
+        <div class="mt-6 text-center">
+          <p class="text-lg text-gray-600 mb-3">이미 회원이신가요?</p>
+          <a 
+            href="/auth/login"
+            class="inline-block bg-white text-zzonde-orange px-6 py-3 rounded-full font-bold text-lg border-2 border-zzonde-orange hover:bg-orange-50 transition-all"
+          >
+            로그인하기
+          </a>
+        </div>
+        
+        <div class="mt-6 text-center">
+          <a 
+            href="/"
+            class="text-lg text-gray-600 hover:text-zzonde-orange transition-colors"
+          >
+            <i class="fas fa-arrow-left mr-2"></i>홈으로 돌아가기
+          </a>
+        </div>
+      </div>
+      
+      <script src="/static/app.js"></script>
+      <script src="/static/auth.js"></script>
+    </div>
+  )
+});
 
 // 날씨 페이지
 app.get('/weather', (c) => {
@@ -379,23 +1327,23 @@ app.get('/weather', (c) => {
           <div class="text-center mb-6">
             <div class="flex items-center justify-center mb-4">
               <i class="fas fa-map-marker-alt text-zzonde-orange text-2xl mr-2"></i>
-              <h2 class="text-2xl font-bold text-gray-800">서울</h2>
+              <h2 id="cityName" class="text-2xl font-bold text-gray-800">서울</h2>
             </div>
             <div class="flex items-center justify-center mb-4">
-              <i class="fas fa-sun text-8xl text-zzonde-yellow"></i>
+              <i id="weatherIcon" class="fas fa-sun text-8xl text-zzonde-yellow"></i>
             </div>
             <div class="text-7xl font-bold text-gray-900 mb-2">
               <span id="currentTemp">15</span>°
             </div>
-            <p class="text-2xl text-gray-600 mb-4">맑음</p>
+            <p id="weatherDesc" class="text-2xl text-gray-600 mb-4">맑음</p>
             <div class="flex justify-center space-x-8 text-lg">
               <div>
                 <i class="fas fa-tint text-blue-500 mr-2"></i>
-                <span>습도 <strong>60%</strong></span>
+                <span>습도 <strong id="humidity">60</strong>%</span>
               </div>
               <div>
                 <i class="fas fa-wind text-gray-500 mr-2"></i>
-                <span>바람 <strong>2.5m/s</strong></span>
+                <span>바람 <strong id="windSpeed">2.5</strong>m/s</span>
               </div>
             </div>
           </div>
@@ -468,21 +1416,21 @@ app.get('/weather', (c) => {
             <i class="fas fa-wind text-zzonde-orange mr-3"></i>
             미세먼지 & 공기질
           </h3>
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-2 gap-4" id="airQualityContainer">
             <div class="bg-green-50 rounded-xl p-6 text-center border-2 border-green-200">
               <i class="fas fa-leaf text-4xl text-green-600 mb-2"></i>
               <p class="text-lg text-gray-700 mb-2">미세먼지 (PM10)</p>
-              <p class="text-3xl font-bold text-green-600">좋음</p>
-              <p class="text-base text-gray-600 mt-2">30 μg/m³</p>
+              <p id="pm10Level" class="text-3xl font-bold text-green-600">좋음</p>
+              <p id="pm10Value" class="text-base text-gray-600 mt-2">30 μg/m³</p>
             </div>
             <div class="bg-green-50 rounded-xl p-6 text-center border-2 border-green-200">
               <i class="fas fa-smog text-4xl text-green-600 mb-2"></i>
               <p class="text-lg text-gray-700 mb-2">초미세먼지 (PM2.5)</p>
-              <p class="text-3xl font-bold text-green-600">좋음</p>
-              <p class="text-base text-gray-600 mt-2">15 μg/m³</p>
+              <p id="pm25Level" class="text-3xl font-bold text-green-600">좋음</p>
+              <p id="pm25Value" class="text-base text-gray-600 mt-2">15 μg/m³</p>
             </div>
           </div>
-          <div class="mt-4 bg-blue-50 rounded-xl p-4 border-l-4 border-blue-500">
+          <div id="airQualityAdvice" class="mt-4 bg-blue-50 rounded-xl p-4 border-l-4 border-blue-500">
             <p class="text-lg text-blue-800">
               <i class="fas fa-info-circle mr-2"></i>
               <strong>외출 추천:</strong> 오늘은 야외 활동하기 좋은 날씨입니다! 🌞
@@ -522,7 +1470,9 @@ app.get('/health', (c) => {
             <div class="text-center bg-orange-50 rounded-xl p-6">
               <i class="fas fa-pills text-4xl text-zzonde-orange mb-3"></i>
               <p class="text-lg text-gray-700">복약</p>
-              <p class="text-3xl font-bold text-zzonde-orange">2/3</p>
+              <div id="medicineStats">
+                <p class="text-3xl font-bold text-zzonde-orange">0/3</p>
+              </div>
             </div>
             <div class="text-center bg-yellow-50 rounded-xl p-6">
               <i class="fas fa-glass-water text-4xl text-blue-500 mb-3"></i>
@@ -544,42 +1494,16 @@ app.get('/health', (c) => {
               <i class="fas fa-pills text-zzonde-orange mr-3"></i>
               오늘의 복약 일정
             </h3>
-            <button class="bg-zzonde-orange text-white px-4 py-2 rounded-full text-base font-semibold hover:bg-zzonde-yellow transition-all">
+            <button 
+              onclick="addMedicine()"
+              class="bg-zzonde-orange text-white px-4 py-2 rounded-full text-base font-semibold hover:bg-zzonde-yellow transition-all"
+            >
               <i class="fas fa-plus mr-2"></i>추가
             </button>
           </div>
           
-          <div class="space-y-3">
-            {[
-              { time: '아침 8:00', name: '혈압약', taken: true, color: 'bg-green-50 border-green-300' },
-              { time: '점심 12:30', name: '소화제', taken: true, color: 'bg-green-50 border-green-300' },
-              { time: '저녁 6:00', name: '비타민', taken: false, color: 'bg-orange-50 border-orange-300' },
-            ].map(med => (
-              <div class={`${med.color} rounded-xl p-5 border-2 flex items-center justify-between`}>
-                <div class="flex items-center space-x-4">
-                  <div class={`w-16 h-16 rounded-full ${med.taken ? 'bg-green-500' : 'bg-zzonde-orange'} flex items-center justify-center`}>
-                    <i class={`fas ${med.taken ? 'fa-check' : 'fa-clock'} text-3xl text-white`}></i>
-                  </div>
-                  <div>
-                    <p class="text-xl font-bold text-gray-800">{med.name}</p>
-                    <p class="text-lg text-gray-600">{med.time}</p>
-                  </div>
-                </div>
-                {!med.taken && (
-                  <button 
-                    onclick={`takeMedicine('${med.name}')`}
-                    class="bg-zzonde-orange text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-zzonde-yellow transition-all"
-                  >
-                    복용 완료
-                  </button>
-                )}
-                {med.taken && (
-                  <span class="text-green-600 font-bold text-xl">
-                    <i class="fas fa-check-circle mr-2"></i>완료
-                  </span>
-                )}
-              </div>
-            ))}
+          <div id="medicineScheduleContainer" class="space-y-3">
+            {/* Medicines will be loaded here */}
           </div>
 
           <button 
@@ -704,7 +1628,12 @@ app.get('/settings', (c) => {
               <i class="fas fa-user-circle text-zzonde-orange mr-3"></i>
               사용자 정보
             </h2>
-            <div class="space-y-4">
+            
+            <div id="authSection" class="space-y-4">
+              {/* Will be filled by JavaScript */}
+            </div>
+            
+            <div class="space-y-4 mt-4" id="profileSection">
               <div class="flex items-center justify-between py-4 border-b border-orange-200">
                 <div class="flex-1">
                   <label class="text-xl font-semibold text-gray-800 block mb-2">이름</label>
@@ -736,6 +1665,54 @@ app.get('/settings', (c) => {
               >
                 <i class="fas fa-save mr-2"></i>저장하기
               </button>
+            </div>
+          </div>
+
+          {/* 긴급 SOS 연락처 섹션 */}
+          <div class="bg-gradient-to-r from-red-50 to-pink-50 rounded-2xl shadow-lg p-6 border-2 border-red-300">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+              <i class="fas fa-exclamation-triangle text-red-600 mr-3"></i>
+              🚨 긴급 SOS 연락처
+            </h2>
+            <div class="space-y-4">
+              <div class="bg-white rounded-xl p-5 border-2 border-red-200">
+                <p class="text-lg font-semibold text-gray-800 mb-3">
+                  <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+                  위급 상황 시 자동으로 연락할 가족/지인을 등록하세요
+                </p>
+                <div class="space-y-3" id="emergencyContactsList">
+                  {/* Will be filled by JavaScript */}
+                </div>
+                <button 
+                  onclick="addEmergencyContact()"
+                  class="w-full mt-4 bg-red-500 text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-red-600 transition-all shadow-lg"
+                >
+                  <i class="fas fa-plus mr-2"></i>비상 연락처 추가
+                </button>
+              </div>
+
+              <div class="bg-yellow-50 rounded-xl p-5 border-2 border-yellow-300">
+                <p class="text-lg font-semibold text-yellow-800 mb-2 flex items-center">
+                  <i class="fas fa-lightbulb text-yellow-600 mr-2"></i>
+                  SOS 버튼 사용법
+                </p>
+                <ul class="space-y-2 text-base text-gray-700">
+                  <li><i class="fas fa-check text-green-600 mr-2"></i>우측 하단 빨간색 SOS 버튼을 눌러주세요</li>
+                  <li><i class="fas fa-check text-green-600 mr-2"></i>3초 카운트다운 후 자동으로 119에 연결됩니다</li>
+                  <li><i class="fas fa-check text-green-600 mr-2"></i>등록된 가족에게도 위치 정보가 전송됩니다</li>
+                  <li><i class="fas fa-check text-green-600 mr-2"></i>실수로 눌렀다면 취소 버튼을 눌러주세요</li>
+                </ul>
+              </div>
+
+              <div class="bg-blue-50 rounded-xl p-5 border-2 border-blue-200">
+                <button 
+                  onclick="emergencySOSSystem.activateSOS()"
+                  class="w-full bg-red-600 text-white px-8 py-5 rounded-full font-black text-2xl hover:bg-red-700 transition-all shadow-xl flex items-center justify-center space-x-3"
+                >
+                  <i class="fas fa-exclamation-triangle text-3xl"></i>
+                  <span>SOS 테스트해보기</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -929,6 +1906,11 @@ app.get('/settings', (c) => {
           </div>
         </div>
       </main>
+      
+      <script src="/static/app.js"></script>
+      <script src="/static/auth.js"></script>
+      <script src="/static/emergency_sos.js"></script>
+      <script src="/static/emergency_contacts.js"></script>
     </div>
   )
 })

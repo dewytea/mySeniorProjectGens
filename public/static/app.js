@@ -134,7 +134,7 @@ function addToVoiceHistory(command, result) {
 // Show notification
 function showNotification(message, type = 'info') {
   const notification = document.createElement('div');
-  notification.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-8 py-4 rounded-full text-xl font-bold shadow-2xl z-50 animate-pulse`;
+  notification.className = `fixed top-20 left-1/2 transform -translate-x-1/2 px-8 py-4 rounded-full text-xl font-bold shadow-2xl z-50 transition-all`;
   
   if (type === 'success') {
     notification.className += ' bg-green-500 text-white';
@@ -142,6 +142,9 @@ function showNotification(message, type = 'info') {
   } else if (type === 'error') {
     notification.className += ' bg-red-500 text-white';
     notification.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i>' + message;
+  } else if (type === 'loading') {
+    notification.className += ' bg-zzonde-orange text-white';
+    notification.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>' + message;
   } else {
     notification.className += ' bg-blue-500 text-white';
     notification.innerHTML = '<i class="fas fa-info-circle mr-2"></i>' + message;
@@ -149,9 +152,25 @@ function showNotification(message, type = 'info') {
   
   document.body.appendChild(notification);
   
-  setTimeout(() => {
-    notification.remove();
-  }, 3000);
+  // Auto-remove after 3 seconds (except loading)
+  if (type !== 'loading') {
+    setTimeout(() => {
+      notification.style.opacity = '0';
+      notification.style.transform = 'translate(-50%, -20px)';
+      setTimeout(() => notification.remove(), 300);
+    }, 3000);
+  }
+  
+  return notification;
+}
+
+// Remove notification manually
+function removeNotification(notification) {
+  if (notification && notification.parentNode) {
+    notification.style.opacity = '0';
+    notification.style.transform = 'translate(-50%, -20px)';
+    setTimeout(() => notification.remove(), 300);
+  }
 }
 
 const textSizes = {
@@ -658,18 +677,48 @@ function speak(text) {
 }
 
 // Load News
-async function loadNews() {
+let allNewsData = [];
+let currentNewsCategory = 'all';
+
+async function loadNews(category = 'all') {
   try {
-    const response = await fetch('/api/news');
+    const response = await fetch(`/api/news?category=${category}`);
     const result = await response.json();
     
     if (result.success) {
+      allNewsData = result.data;
       renderNews(result.data);
       renderNewsDetail(result.data);
     }
   } catch (error) {
     console.error('뉴스 로딩 오류:', error);
   }
+}
+
+function filterNewsByCategory(category) {
+  currentNewsCategory = category;
+  
+  // Update button styles
+  document.querySelectorAll('.news-category-btn').forEach(btn => {
+    if (btn.dataset.category === category) {
+      btn.className = 'news-category-btn bg-zzonde-orange text-white px-6 py-3 rounded-full font-bold text-lg whitespace-nowrap shadow-md hover:shadow-lg transition-all';
+    } else {
+      btn.className = 'news-category-btn bg-white text-gray-800 px-6 py-3 rounded-full font-bold text-lg whitespace-nowrap shadow-md hover:shadow-lg transition-all border-2 border-gray-300';
+    }
+  });
+  
+  // Load news for category
+  loadNews(category);
+  
+  // TTS announcement
+  const categoryNames = {
+    'all': '전체',
+    'society': '사회',
+    'health': '건강',
+    'economy': '경제',
+    'it': 'IT'
+  };
+  speak(`${categoryNames[category]} 뉴스를 보여드립니다`);
 }
 
 function renderNews(newsItems) {
@@ -698,6 +747,16 @@ function renderNewsDetail(newsItems) {
   const newsDetailList = document.getElementById('newsDetailList');
   if (!newsDetailList) return;
   
+  if (!newsItems || newsItems.length === 0) {
+    newsDetailList.innerHTML = `
+      <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
+        <i class="fas fa-newspaper text-6xl text-gray-300 mb-4"></i>
+        <p class="text-2xl text-gray-600">해당 카테고리에 뉴스가 없습니다</p>
+      </div>
+    `;
+    return;
+  }
+  
   newsDetailList.innerHTML = newsItems.map(news => `
     <article class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all">
       <div class="flex items-center space-x-3 mb-4">
@@ -705,12 +764,14 @@ function renderNewsDetail(newsItems) {
           ${news.category}
         </span>
         <span class="text-gray-500 text-base">${news.time}</span>
+        ${news.source ? `<span class="text-gray-400 text-sm">| ${news.source}</span>` : ''}
       </div>
       <h2 class="text-2xl font-bold text-gray-800 mb-4 leading-relaxed">${news.title}</h2>
       <p class="text-xl text-gray-700 leading-relaxed mb-6">${news.summary}</p>
       <div class="flex items-center space-x-4">
         <button 
-          onclick="speakNews('${news.id}')"
+          onclick="speakNews(${news.id})"
+          data-id="${news.id}"
           data-title="${news.title.replace(/'/g, '&#39;')}"
           data-summary="${news.summary.replace(/'/g, '&#39;')}"
           class="flex-1 px-6 py-4 rounded-xl font-bold text-xl transition-all shadow-md"
@@ -720,7 +781,7 @@ function renderNewsDetail(newsItems) {
           <span style="display: inline-block; color: #FFFFFF !important; font-weight: 700; font-size: 18px;">읽어주기</span>
         </button>
         <button 
-          onclick="shareNews('${news.id}')"
+          onclick="shareNews(${news.id})"
           class="flex-1 px-6 py-4 rounded-xl font-bold text-xl transition-all shadow-md"
           style="display: flex !important; align-items: center !important; justify-content: center !important; gap: 12px !important; min-height: 56px !important; background-color: #f3f4f6 !important; color: #222222 !important;"
         >
@@ -742,8 +803,35 @@ function speakNews(newsId) {
 
 // Helper function for sharing news
 function shareNews(newsId) {
-  speak('공유 기능은 곧 제공될 예정입니다');
-  // Future: Implement actual sharing functionality
+  const news = allNewsData.find(n => n.id === newsId);
+  if (news && news.url) {
+    // Try to use Web Share API if available
+    if (navigator.share) {
+      navigator.share({
+        title: news.title,
+        text: news.summary,
+        url: news.url
+      }).then(() => {
+        speak('뉴스가 공유되었습니다');
+        showNotification('공유 완료! 📤', 'success');
+      }).catch((error) => {
+        console.log('공유 취소:', error);
+      });
+    } else {
+      // Fallback: copy to clipboard
+      const shareText = `${news.title}\n\n${news.summary}\n\n${news.url}`;
+      navigator.clipboard.writeText(shareText).then(() => {
+        speak('뉴스 링크가 복사되었습니다');
+        showNotification('링크 복사 완료! 📋', 'success');
+      }).catch(err => {
+        speak('공유 기능은 곧 제공될 예정입니다');
+        showNotification('공유 기능 준비중', 'info');
+      });
+    }
+  } else {
+    speak('공유 기능은 곧 제공될 예정입니다');
+    showNotification('공유 기능 준비중', 'info');
+  }
 }
 
 // Click outside modal to close
@@ -773,39 +861,402 @@ document.addEventListener('keydown', (e) => {
 
 // ===== Weather Functions =====
 
+// Load Weather Data
+async function loadWeather() {
+  const loadingNotif = showNotification('날씨 정보 불러오는 중...', 'loading');
+  
+  try {
+    const response = await fetch('/api/weather?city=Seoul');
+    const result = await response.json();
+    
+    if (result.success && result.data) {
+      const data = result.data;
+      
+      // Update temperature
+      const tempEl = document.getElementById('currentTemp');
+      if (tempEl) tempEl.textContent = data.temp;
+      
+      // Update city name
+      const cityEl = document.getElementById('cityName');
+      if (cityEl) cityEl.textContent = data.city;
+      
+      // Update description
+      const descEl = document.getElementById('weatherDesc');
+      if (descEl) descEl.textContent = data.description;
+      
+      // Update humidity
+      const humidityEl = document.getElementById('humidity');
+      if (humidityEl) humidityEl.textContent = data.humidity;
+      
+      // Update wind speed
+      const windEl = document.getElementById('windSpeed');
+      if (windEl) windEl.textContent = data.wind_speed.toFixed(1);
+      
+      // Update weather icon
+      const iconEl = document.getElementById('weatherIcon');
+      if (iconEl) {
+        const iconMap = {
+          '01d': 'fa-sun',
+          '01n': 'fa-moon',
+          '02d': 'fa-cloud-sun',
+          '02n': 'fa-cloud-moon',
+          '03d': 'fa-cloud',
+          '03n': 'fa-cloud',
+          '04d': 'fa-cloud',
+          '04n': 'fa-cloud',
+          '09d': 'fa-cloud-rain',
+          '09n': 'fa-cloud-rain',
+          '10d': 'fa-cloud-sun-rain',
+          '10n': 'fa-cloud-moon-rain',
+          '11d': 'fa-bolt',
+          '11n': 'fa-bolt',
+          '13d': 'fa-snowflake',
+          '13n': 'fa-snowflake',
+          '50d': 'fa-smog',
+          '50n': 'fa-smog'
+        };
+        
+        const iconClass = iconMap[data.icon] || 'fa-sun';
+        iconEl.className = `fas ${iconClass} text-8xl text-zzonde-yellow`;
+      }
+      
+      removeNotification(loadingNotif);
+    }
+  } catch (error) {
+    console.error('날씨 데이터 로딩 오류:', error);
+    removeNotification(loadingNotif);
+    showNotification('날씨 정보를 불러올 수 없습니다', 'error');
+  }
+}
+
+// Load Air Quality Data
+async function loadAirQuality() {
+  try {
+    const response = await fetch('/api/air-quality');
+    const result = await response.json();
+    
+    if (result.success && result.data) {
+      const data = result.data;
+      
+      // Color mapping
+      const colorClasses = {
+        'green': {
+          bg: 'bg-green-50',
+          border: 'border-green-200',
+          text: 'text-green-600',
+          icon: 'text-green-600'
+        },
+        'yellow': {
+          bg: 'bg-yellow-50',
+          border: 'border-yellow-200',
+          text: 'text-yellow-600',
+          icon: 'text-yellow-600'
+        },
+        'orange': {
+          bg: 'bg-orange-50',
+          border: 'border-orange-200',
+          text: 'text-orange-600',
+          icon: 'text-orange-600'
+        },
+        'red': {
+          bg: 'bg-red-50',
+          border: 'border-red-200',
+          text: 'text-red-600',
+          icon: 'text-red-600'
+        },
+        'purple': {
+          bg: 'bg-purple-50',
+          border: 'border-purple-200',
+          text: 'text-purple-600',
+          icon: 'text-purple-600'
+        }
+      };
+      
+      const colors = colorClasses[data.color] || colorClasses['green'];
+      
+      // Update PM10
+      const pm10LevelEl = document.getElementById('pm10Level');
+      const pm10ValueEl = document.getElementById('pm10Value');
+      if (pm10LevelEl) {
+        pm10LevelEl.textContent = data.level;
+        pm10LevelEl.className = `text-3xl font-bold ${colors.text}`;
+      }
+      if (pm10ValueEl) {
+        pm10ValueEl.textContent = `${data.pm10} μg/m³`;
+      }
+      
+      // Update PM2.5
+      const pm25LevelEl = document.getElementById('pm25Level');
+      const pm25ValueEl = document.getElementById('pm25Value');
+      if (pm25LevelEl) {
+        pm25LevelEl.textContent = data.level;
+        pm25LevelEl.className = `text-3xl font-bold ${colors.text}`;
+      }
+      if (pm25ValueEl) {
+        pm25ValueEl.textContent = `${data.pm25} μg/m³`;
+      }
+      
+      // Update container colors
+      const container = document.getElementById('airQualityContainer');
+      if (container) {
+        const cards = container.querySelectorAll('div');
+        cards.forEach(card => {
+          card.className = `${colors.bg} rounded-xl p-6 text-center border-2 ${colors.border}`;
+          const icons = card.querySelectorAll('i');
+          icons.forEach(icon => {
+            icon.className = icon.className.replace(/text-\w+-\d+/, colors.icon);
+          });
+        });
+      }
+      
+      // Update advice
+      const adviceEl = document.getElementById('airQualityAdvice');
+      if (adviceEl) {
+        let advice = '';
+        let adviceColor = 'blue';
+        
+        if (data.aqi === 1) {
+          advice = '<strong>외출 추천:</strong> 오늘은 야외 활동하기 좋은 날씨입니다! 🌞';
+          adviceColor = 'blue';
+        } else if (data.aqi === 2) {
+          advice = '<strong>보통:</strong> 민감군은 장시간 실외 활동을 줄이세요.';
+          adviceColor = 'yellow';
+        } else if (data.aqi >= 3) {
+          advice = '<strong>외출 주의:</strong> 마스크를 착용하고 실외 활동을 자제하세요. 😷';
+          adviceColor = 'red';
+        }
+        
+        adviceEl.innerHTML = `<p class="text-lg text-${adviceColor}-800"><i class="fas fa-info-circle mr-2"></i>${advice}</p>`;
+        adviceEl.className = `mt-4 bg-${adviceColor}-50 rounded-xl p-4 border-l-4 border-${adviceColor}-500`;
+      }
+    }
+  } catch (error) {
+    console.error('대기질 데이터 로딩 오류:', error);
+  }
+}
+
 function speakWeather() {
   const temp = document.getElementById('currentTemp')?.textContent || '15';
-  const weatherText = `현재 서울 날씨를 알려드립니다. 
-    기온은 섭씨 ${temp}도이며, 맑은 날씨입니다. 
-    습도는 60퍼센트, 바람은 초속 2.5미터입니다. 
-    미세먼지와 초미세먼지 모두 좋음 단계로, 
-    야외 활동하기 좋은 날씨입니다.`;
+  const city = document.getElementById('cityName')?.textContent || '서울';
+  const desc = document.getElementById('weatherDesc')?.textContent || '맑음';
+  const humidity = document.getElementById('humidity')?.textContent || '60';
+  const windSpeed = document.getElementById('windSpeed')?.textContent || '2.5';
+  const pm10 = document.getElementById('pm10Level')?.textContent || '좋음';
+  const pm25 = document.getElementById('pm25Level')?.textContent || '좋음';
+  
+  const weatherText = `현재 ${city} 날씨를 알려드립니다. 
+    기온은 섭씨 ${temp}도이며, ${desc} 날씨입니다. 
+    습도는 ${humidity}퍼센트, 바람은 초속 ${windSpeed}미터입니다. 
+    미세먼지는 ${pm10}, 초미세먼지는 ${pm25} 단계입니다.`;
   
   speak(weatherText);
 }
 
 // ===== Health Functions =====
 
-function takeMedicine(medicineName) {
-  speak(`${medicineName} 복용을 완료하셨습니다. 좋아요!`);
+// Medicine data management (using localStorage for MVP)
+function getMedicines() {
+  const saved = localStorage.getItem('zzonde_medicines');
+  if (saved) {
+    return JSON.parse(saved);
+  }
   
-  // Show success message
-  const message = document.createElement('div');
-  message.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-8 py-4 rounded-full text-xl font-bold shadow-2xl z-50 animate-pulse';
-  message.innerHTML = '<i class="fas fa-check-circle mr-2"></i>복약 완료!';
-  document.body.appendChild(message);
+  // Default medicines
+  return [
+    {
+      id: 1,
+      name: '혈압약',
+      time: '08:00',
+      timeDisplay: '아침 8:00',
+      taken: false,
+      takenAt: null,
+      frequency: 'daily',
+      notes: '식후 30분'
+    },
+    {
+      id: 2,
+      name: '소화제',
+      time: '12:30',
+      timeDisplay: '점심 12:30',
+      taken: false,
+      takenAt: null,
+      frequency: 'daily',
+      notes: '식후 즉시'
+    },
+    {
+      id: 3,
+      name: '비타민',
+      time: '18:00',
+      timeDisplay: '저녁 6:00',
+      taken: false,
+      takenAt: null,
+      frequency: 'daily',
+      notes: '식후 30분'
+    }
+  ];
+}
+
+function saveMedicines(medicines) {
+  localStorage.setItem('zzonde_medicines', JSON.stringify(medicines));
+}
+
+function resetDailyMedicines() {
+  const medicines = getMedicines();
+  const today = new Date().toDateString();
+  const lastReset = localStorage.getItem('zzonde_medicine_reset_date');
   
-  setTimeout(() => {
-    message.remove();
-  }, 3000);
+  if (lastReset !== today) {
+    // Reset all medicines for new day
+    medicines.forEach(med => {
+      med.taken = false;
+      med.takenAt = null;
+    });
+    saveMedicines(medicines);
+    localStorage.setItem('zzonde_medicine_reset_date', today);
+  }
+}
+
+// Load medicines on health page
+function loadMedicines() {
+  resetDailyMedicines();
+  const medicines = getMedicines();
+  renderMedicines(medicines);
+  updateMedicineStats(medicines);
+}
+
+function renderMedicines(medicines) {
+  const container = document.querySelector('#medicineScheduleContainer');
+  if (!container) return;
+  
+  container.innerHTML = medicines.map(med => {
+    const colorClass = med.taken ? 'bg-green-50 border-green-300' : 'bg-orange-50 border-orange-300';
+    const iconBg = med.taken ? 'bg-green-500' : 'bg-zzonde-orange';
+    const icon = med.taken ? 'fa-check' : 'fa-clock';
+    
+    return `
+      <div class="${colorClass} rounded-xl p-5 border-2 flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <div class="w-16 h-16 rounded-full ${iconBg} flex items-center justify-center">
+            <i class="fas ${icon} text-3xl text-white"></i>
+          </div>
+          <div>
+            <p class="text-xl font-bold text-gray-800">${med.name}</p>
+            <p class="text-lg text-gray-600">${med.timeDisplay}</p>
+            ${med.notes ? `<p class="text-base text-gray-500 mt-1"><i class="fas fa-info-circle mr-1"></i>${med.notes}</p>` : ''}
+          </div>
+        </div>
+        ${!med.taken ? `
+          <button 
+            onclick="takeMedicine(${med.id})"
+            class="bg-zzonde-orange text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-zzonde-yellow transition-all"
+          >
+            복용 완료
+          </button>
+        ` : `
+          <span class="text-green-600 font-bold text-xl">
+            <i class="fas fa-check-circle mr-2"></i>완료
+          </span>
+        `}
+      </div>
+    `;
+  }).join('');
+}
+
+function updateMedicineStats(medicines) {
+  const taken = medicines.filter(m => m.taken).length;
+  const total = medicines.length;
+  
+  const statEl = document.querySelector('#medicineStats');
+  if (statEl) {
+    statEl.innerHTML = `
+      <p class="text-3xl font-bold text-zzonde-orange">${taken}/${total}</p>
+    `;
+  }
+}
+
+function takeMedicine(medicineId) {
+  const medicines = getMedicines();
+  const medicine = medicines.find(m => m.id === medicineId);
+  
+  if (medicine) {
+    medicine.taken = true;
+    medicine.takenAt = new Date().toISOString();
+    saveMedicines(medicines);
+    
+    speak(`${medicine.name} 복용을 완료하셨습니다. 좋아요!`);
+    showNotification(`${medicine.name} 복용 완료! 💊`, 'success');
+    
+    // Re-render
+    loadMedicines();
+    
+    // Send to API (for future D1 integration)
+    fetch(`/api/medicines/${medicineId}/take`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    }).catch(err => console.error('Failed to sync medicine take:', err));
+  }
+}
+
+function addMedicine() {
+  const name = prompt('약 이름을 입력하세요:');
+  if (!name || !name.trim()) return;
+  
+  const time = prompt('복용 시간을 입력하세요 (예: 08:00):');
+  if (!time || !time.trim()) return;
+  
+  const notes = prompt('특별한 주의사항이 있나요? (선택사항)') || '';
+  
+  const medicines = getMedicines();
+  const newMedicine = {
+    id: Date.now(),
+    name: name.trim(),
+    time: time.trim(),
+    timeDisplay: convertTimeToDisplay(time.trim()),
+    taken: false,
+    takenAt: null,
+    frequency: 'daily',
+    notes: notes.trim()
+  };
+  
+  medicines.push(newMedicine);
+  saveMedicines(medicines);
+  
+  speak(`${name} 복용 일정이 추가되었습니다`);
+  showNotification('복약 일정 추가됨! 💊', 'success');
+  
+  loadMedicines();
+}
+
+function convertTimeToDisplay(time) {
+  const [hour, minute] = time.split(':');
+  const h = parseInt(hour);
+  
+  let period = '';
+  if (h >= 5 && h < 12) period = '아침';
+  else if (h >= 12 && h < 17) period = '점심';
+  else if (h >= 17 && h < 21) period = '저녁';
+  else period = '밤';
+  
+  return `${period} ${time}`;
 }
 
 function speakMedicineReminder() {
-  const reminderText = `오늘의 복약 일정을 알려드립니다. 
-    아침 8시 혈압약, 완료. 
-    점심 12시 30분 소화제, 완료. 
-    저녁 6시 비타민, 아직 복용하지 않으셨습니다. 
-    잊지 말고 복용하세요!`;
+  const medicines = getMedicines();
+  const taken = medicines.filter(m => m.taken);
+  const remaining = medicines.filter(m => !m.taken);
+  
+  let reminderText = `오늘의 복약 일정을 알려드립니다. `;
+  
+  if (taken.length > 0) {
+    reminderText += taken.map(m => `${m.timeDisplay} ${m.name}, 완료`).join('. ') + '. ';
+  }
+  
+  if (remaining.length > 0) {
+    reminderText += remaining.map(m => `${m.timeDisplay} ${m.name}, 아직 복용하지 않으셨습니다`).join('. ') + '. ';
+    reminderText += '잊지 말고 복용하세요!';
+  } else {
+    reminderText += '오늘 복약을 모두 완료하셨습니다. 좋아요!';
+  }
   
   speak(reminderText);
 }
@@ -825,12 +1276,18 @@ const currentPath = window.location.pathname;
 
 if (currentPath === '/weather') {
   console.log('Weather page loaded');
-  // Could load real weather data here
+  loadWeather();
+  loadAirQuality();
 }
 
 if (currentPath === '/health') {
   console.log('Health page loaded');
-  // Could load health data from localStorage or API
+  loadMedicines();
+}
+
+if (currentPath === '/news') {
+  console.log('News page loaded');
+  loadNews('all');
 }
 
 console.log('ZZONDE initialized successfully! 🚀');
